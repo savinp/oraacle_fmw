@@ -1,4 +1,4 @@
-FROM firstdocker1/fmw-dev-infrastructure:12.2.1.4-1
+FROM firstdocker1/or-fm-infa:12.4-1
 
 USER oracle
 
