@@ -1,108 +1,106 @@
-	No older events at this moment. 
-Retry
-	2023-04-17T10:43:26.264+05:30	Domain Home is: /u01/oracle/user_projects/domains/myinfraDomain
-	2023-04-17T10:43:26.264+05:30	Configuring Domain for first time
-	2023-04-17T10:43:26.264+05:30	Start the Admin and Managed Servers
-	2023-04-17T10:43:26.264+05:30	=====================================
-	2023-04-17T10:43:26.264+05:30	CONNECTION_STRING=myoracledb3.cgqwbwooqm3q.us-west-2.rds.amazonaws.com:1521/ORCL
-	2023-04-17T10:43:26.264+05:30	RCUPREFIX=INFRA01
-	2023-04-17T10:43:26.264+05:30	DOMAIN_NAME=myinfraDomain
-	2023-04-17T10:43:26.264+05:30	DOMAIN_HOME=/u01/oracle/user_projects/domains/myinfraDomain
-	2023-04-17T10:43:26.264+05:30	Loading RCU Phase
-	2023-04-17T10:43:26.264+05:30	=================
-	2023-04-17T10:43:26.264+05:30	CONNECTION_STRING=myoracledb3.cgqwbwooqm3q.us-west-2.rds.amazonaws.com:1521/ORCL
-	2023-04-17T10:43:26.264+05:30	RCUPREFIX=INFRA01
-	2023-04-17T10:43:26.264+05:30	jdbc_url=jdbc:oracle:thin:@myoracledb3.cgqwbwooqm3q.us-west-2.rds.amazonaws.com:1521/ORCL
-	2023-04-17T10:43:26.264+05:30	Creating Domain 1st execution
-	2023-04-17T10:43:26.292+05:30	Loading SOA RCU into database
-	2023-04-17T10:43:36.529+05:30	RCU has some error
-	2023-04-17T10:43:36.531+05:30	RCU has already loaded schemas into the Database
-	2023-04-17T10:43:36.531+05:30	RCU Ignore error
-	2023-04-17T10:43:36.533+05:30	Domain Configuration Phase
-	2023-04-17T10:43:36.533+05:30	==========================
-	2023-04-17T10:43:37.127+05:30	Initializing WebLogic Scripting Tool (WLST) ...
-	2023-04-17T10:43:55.695+05:30	Welcome to WebLogic Server Administration Scripting Shell
-	2023-04-17T10:43:55.695+05:30	Type help() for help on available commands
-	2023-04-17T10:44:07.935+05:30	Creating Admin Server...
-	2023-04-17T10:44:08.509+05:30	Creating cluster...
-	2023-04-17T10:44:08.616+05:30
-Creating Node Managers...
-	Creating Node Managers...
-	2023-04-17T10:44:08.696+05:30	Creating Managed Server...
-	2023-04-17T10:44:08.733+05:30	managed server name is infraServer1
-	2023-04-17T10:44:08.804+05:30	Writing base domain...
-	2023-04-17T10:44:14.623+05:30	Base domain created at /u01/oracle/user_projects/domains/myinfraDomain
-	2023-04-17T10:44:14.624+05:30	Extending domain at /u01/oracle/user_projects/domains/myinfraDomain
-	2023-04-17T10:44:14.624+05:30	Database myoracledb3.cgqwbwooqm3q.us-west-2.rds.amazonaws.com:1521/ORCL
-	2023-04-17T10:44:14.918+05:30	Applying JRF templates...
-	2023-04-17T10:44:25.718+05:30	Extension Templates added
-	2023-04-17T10:44:25.718+05:30	Configuring the Service Table DataSource...
-	2023-04-17T10:44:25.718+05:30	fmwDatabase jdbc:oracle:thin:@myoracledb3.cgqwbwooqm3q.us-west-2.rds.amazonaws.com:1521/ORCL
-	2023-04-17T10:44:25.833+05:30	Getting Database Defaults...
-	2023-04-17T10:44:27.398+05:30	Targeting Server Groups...
-	2023-04-17T10:44:28.515+05:30	Set CoherenceClusterSystemResource to defaultCoherenceCluster for server:infraServer1
-	2023-04-17T10:44:28.538+05:30	Set CoherenceClusterSystemResource to defaultCoherenceCluster for cluster:infra_cluster
-	2023-04-17T10:44:28.595+05:30	Set WLS clusters as target of defaultCoherenceCluster:[infra_cluster]
-	2023-04-17T10:44:28.598+05:30	Preparing to update domain...
-	2023-04-17T10:44:36.197+05:30	Error: runCmd() failed. Do dumpStack() to see details.
-	2023-04-17T10:44:36.199+05:30	Problem invoking WLST - Traceback (innermost last):
-	2023-04-17T10:44:36.199+05:30	File "/u01/oracle/container-scripts/createInfraDomain.py", line 308, in ?
-	2023-04-17T10:44:36.199+05:30	File "/u01/oracle/container-scripts/createInfraDomain.py", line 47, in createInfraDomain
-	2023-04-17T10:44:36.199+05:30
+Preparing to update domain...
+Apr 16, 2023 12:17:37 PM oracle.security.jps.internal.policystore.util.JpsDataManagerUtil getDBConnection
+WARNING: Can not connect DB with URL jdbc:oracle:thin:@//myoracledb3.cgqwbwooqm3q.us-west-2.rds.amazonaws.com:1521/ORCL
+java.sql.SQLException: ORA-01017: invalid username/password; logon denied
+
+        at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:509)
+        at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:456)
+        at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:451)
+        at oracle.jdbc.driver.T4CTTIfun.processError(T4CTTIfun.java:1040)
+        at oracle.jdbc.driver.T4CTTIoauthenticate.processError(T4CTTIoauthenticate.java:552)
+        at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:550)
+        at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:268)
+        at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:501)
+        at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:1292)
+        at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:1025)
+        at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:743)
+        at oracle.jdbc.driver.PhysicalConnection.connect(PhysicalConnection.java:793)
+        at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:57)
+        at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:747)
+        at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:562)
+        at java.sql.DriverManager.getConnection(DriverManager.java:664)
+        at java.sql.DriverManager.getConnection(DriverManager.java:208)
+        at oracle.security.jps.internal.policystore.util.JpsDataManagerUtil.getDBConnection(JpsDataManagerUtil.java:405)
+        at oracle.security.jps.internal.policystore.util.JpsDataManagerUtil.isNewSchema(JpsDataManagerUtil.java:246)
+        at oracle.security.jps.internal.core.datamanager.DataManagerFactoryImpl.isNewSchema(DataManagerFactoryImpl.java:252)
+        at oracle.security.jps.internal.common.rdbms.util.JpsDbBootstrapImpl.<init>(JpsDbBootstrapImpl.java:182)
+        at oracle.security.opss.tools.lifecycle.OpssLifecycleUtil.getJpsDbBootstrap(OpssLifecycleUtil.java:784)
+        at oracle.security.opss.tools.lifecycle.OpssLifecycleUtil.checkIfFarmExists(OpssLifecycleUtil.java:706)
+        at oracle.security.opss.tools.lifecycle.OpssDomainConfigImpl.checkIfFarmExists(OpssDomainConfigImpl.java:909)
+        at oracle.security.opss.tools.lifecycle.OpssDomainConfigImpl.configureDBSecurityStore(OpssDomainConfigImpl.java:602)
+        at oracle.security.opss.tools.lifecycle.OpssDomainConfigImpl.configureSubsystem(OpssDomainConfigImpl.java:489)
+        at oracle.security.opss.tools.lifecycle.OpssDomainConfigImpl.initializeSubsystem(OpssDomainConfigImpl.java:269)
+        at oracle.security.opss.tools.lifecycle.cie.OpssSecurityConfiguration.initializeSubsystem(OpssSecurityConfiguration.java:188)
+        at com.oracle.cie.domain.progress.template.importer.ImporterOPSSProcessingPhase.initialize(ImporterOPSSProcessingPhase.java:36)
+        at com.oracle.cie.domain.progress.domain.generation.OPSSProcessingPhase.processOPSS(OPSSProcessingPhase.java:154)
+        at com.oracle.cie.domain.progress.domain.generation.OPSSProcessingPhase.execute(OPSSProcessingPhase.java:54)
+        at com.oracle.cie.domain.progress.AbstractProgressGenerator.run(AbstractProgressGenerator.java:94)
+        at java.lang.Thread.run(Thread.java:750)
+
+Error: runCmd() failed. Do dumpStack() to see details.
+Problem invoking WLST - Traceback (innermost last):
+  File "/u01/oracle/container-scripts/createInfraDomain.py", line 308, in ?
+  File "/u01/oracle/container-scripts/createInfraDomain.py", line 47, in createInfraDomain
   File "/u01/oracle/container-scripts/createInfraDomain.py", line 177, in extendDomain
-	File "/u01/oracle/container-scripts/createInfraDomain.py", line 177, in extendDomain
-	2023-04-17T10:44:36.199+05:30	File "/tmp/WLSTOfflineIni372167973427578287.py", line 143, in updateDomain
-	2023-04-17T10:44:36.199+05:30	File "/tmp/WLSTOfflineIni372167973427578287.py", line 19, in command
-	2023-04-17T10:44:36.199+05:30	64254: Error occurred in "OPSS Processing" phase execution
-	2023-04-17T10:44:36.199+05:30	64254: Encountered error: SecurityContext:
-	2023-04-17T10:44:36.199+05:30	Domain Name: myinfraDomain
-	2023-04-17T10:44:36.199+05:30	JDBC URL: opss-audit-DBDS:jdbc:oracle:thin:@//dbhost.example.com:1521/orcl
-	2023-04-17T10:44:36.199+05:30	JDBC URL: opss-data-source:jdbc:oracle:thin:@//dbhost.example.com:1521/orcl
-	2023-04-17T10:44:36.199+05:30	JNDI Name: opss-audit-DBDS:jdbc/AuditAppendDataSource
-	2023-04-17T10:44:36.199+05:30	JNDI Name: opss-data-source:jdbc/OpssDataSource
-	2023-04-17T10:44:36.199+05:30	Driver Name: opss-audit-DBDS:oracle.jdbc.OracleDriver
-	2023-04-17T10:44:36.199+05:30	Driver Name: opss-data-source:oracle.jdbc.OracleDriver
-	2023-04-17T10:44:36.199+05:30	Persistence Type: DATABASE
-	2023-04-17T10:44:36.199+05:30	Platform: WLS
-	2023-04-17T10:44:36.199+05:30	Scratch Dir: scratch
-	2023-04-17T10:44:36.199+05:30	Reconfig Domain: false
-	2023-04-17T10:44:36.199+05:30	Shared Secret Store: null
-	2023-04-17T10:44:36.199+05:30	Extension: true
-	2023-04-17T10:44:36.199+05:30	DisableManagementOperations: falseJDBC Properties:
-	2023-04-17T10:44:36.199+05:30	user:DEV_IAU_APPEND
-	2023-04-17T10:44:36.199+05:30	username:DEV_IAU_APPENDJDBC Properties:
-	2023-04-17T10:44:36.199+05:30	user:DEV_OPSS
-	2023-04-17T10:44:36.199+05:30	username:DEV_OPSS
-	2023-04-17T10:44:36.199+05:30	64254: Check log for more detail.
-	2023-04-17T10:44:36.199+05:30	null
-	2023-04-17T10:44:36.199+05:30	at com.oracle.cie.domain.script.jython.CommandExceptionHandler.handleException(CommandExceptionHandler.java:69)
-	2023-04-17T10:44:36.199+05:30	at com.oracle.cie.domain.script.jython.WLScriptContext.handleException(WLScriptContext.java:3085)
-	2023-04-17T10:44:36.199+05:30	at com.oracle.cie.domain.script.jython.WLScriptContext.runCmd(WLScriptContext.java:738)
-	2023-04-17T10:44:36.199+05:30	at sun.reflect.GeneratedMethodAccessor125.invoke(Unknown Source)
-	2023-04-17T10:44:36.199+05:30	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	2023-04-17T10:44:36.199+05:30	at java.lang.reflect.Method.invoke(Method.java:498)
-	2023-04-17T10:44:36.199+05:30	com.oracle.cie.domain.script.jython.WLSTException: com.oracle.cie.domain.script.jython.WLSTException: Error updating domain:
-	2023-04-17T10:44:36.199+05:30	64254: Error occurred in "OPSS Processing" phase execution
-	2023-04-17T10:44:36.199+05:30	64254: Encountered error: SecurityContext:
-	2023-04-17T10:44:36.199+05:30	Domain Name: myinfraDomain
-	2023-04-17T10:44:36.199+05:30	JDBC URL: opss-audit-DBDS:jdbc:oracle:thin:@//dbhost.example.com:1521/orcl
-	2023-04-17T10:44:36.199+05:30	JDBC URL: opss-data-source:jdbc:oracle:thin:@//dbhost.example.com:1521/orcl
-	2023-04-17T10:44:36.199+05:30	JNDI Name: opss-audit-DBDS:jdbc/AuditAppendDataSource
-	2023-04-17T10:44:36.199+05:30	JNDI Name: opss-data-source:jdbc/OpssDataSource
-	2023-04-17T10:44:36.199+05:30	Driver Name: opss-audit-DBDS:oracle.jdbc.OracleDriver
-	2023-04-17T10:44:36.199+05:30	Driver Name: opss-data-source:oracle.jdbc.OracleDriver
-	2023-04-17T10:44:36.199+05:30	Persistence Type: DATABASE
-	2023-04-17T10:44:36.199+05:30	Platform: WLS
-	2023-04-17T10:44:36.199+05:30	Scratch Dir: scratch
-	2023-04-17T10:44:36.199+05:30	Reconfig Domain: false
-	2023-04-17T10:44:36.199+05:30	Shared Secret Store: null
-	2023-04-17T10:44:36.199+05:30	Extension: true
-	2023-04-17T10:44:36.199+05:30	DisableManagementOperations: falseJDBC Properties:
-	2023-04-17T10:44:36.199+05:30	user:DEV_IAU_APPEND
-	2023-04-17T10:44:36.199+05:30	username:DEV_IAU_APPENDJDBC Properties:
-	2023-04-17T10:44:36.199+05:30	user:DEV_OPSS
-	2023-04-17T10:44:36.199+05:30	username:DEV_OPSS
-	2023-04-17T10:44:36.199+05:30	64254: Check log for more detail.
-	2023-04-17T10:44:36.199+05:30	null
-	2023-04-17T10:44:36.250+05:30	RetVal from Domain creation 1
-	2023-04-17T10:44:36.250+05:30	Domain Creation Failed.. Please check the Domain Logs
+  File "/tmp/WLSTOfflineIni8225959538870161221.py", line 143, in updateDomain
+  File "/tmp/WLSTOfflineIni8225959538870161221.py", line 19, in command
+64254: Error occurred in "OPSS Processing" phase execution
+64254: Encountered error: SecurityContext:
+ Domain Name: myinfraDomain
+ JDBC URL: opss-audit-DBDS:jdbc:oracle:thin:@//myoracledb3.cgqwbwooqm3q.us-west-2.rds.amazonaws.com:1521/ORCL
+ JDBC URL: opss-data-source:jdbc:oracle:thin:@//myoracledb3.cgqwbwooqm3q.us-west-2.rds.amazonaws.com:1521/ORCL
+ JNDI Name: opss-audit-DBDS:jdbc/AuditAppendDataSource
+ JNDI Name: opss-data-source:jdbc/OpssDataSource
+ Driver Name: opss-audit-DBDS:oracle.jdbc.OracleDriver
+ Driver Name: opss-data-source:oracle.jdbc.OracleDriver
+ Persistence Type: DATABASE
+ Platform: WLS
+ Scratch Dir: scratch
+ Reconfig Domain: false
+ Shared Secret Store: null
+ Extension: true
+ DisableManagementOperations: falseJDBC Properties:
+user:INFRA02_IAU_APPEND
+username:INFRA02_IAU_APPENDJDBC Properties:
+user:INFRA02_OPSS
+username:INFRA02_OPSS
+64254: Check log for more detail.
+null
+        at com.oracle.cie.domain.script.jython.CommandExceptionHandler.handleException(CommandExceptionHandler.java:69)
+        at com.oracle.cie.domain.script.jython.WLScriptContext.handleException(WLScriptContext.java:3085)
+        at com.oracle.cie.domain.script.jython.WLScriptContext.runCmd(WLScriptContext.java:738)
+        at sun.reflect.GeneratedMethodAccessor125.invoke(Unknown Source)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.lang.reflect.Method.invoke(Method.java:498)
+
+com.oracle.cie.domain.script.jython.WLSTException: com.oracle.cie.domain.script.jython.WLSTException: Error updating domain:
+64254: Error occurred in "OPSS Processing" phase execution
+64254: Encountered error: SecurityContext:
+ Domain Name: myinfraDomain
+ JDBC URL: opss-audit-DBDS:jdbc:oracle:thin:@//myoracledb3.cgqwbwooqm3q.us-west-2.rds.amazonaws.com:1521/ORCL
+ JDBC URL: opss-data-source:jdbc:oracle:thin:@//myoracledb3.cgqwbwooqm3q.us-west-2.rds.amazonaws.com:1521/ORCL
+ JNDI Name: opss-audit-DBDS:jdbc/AuditAppendDataSource
+ JNDI Name: opss-data-source:jdbc/OpssDataSource
+ Driver Name: opss-audit-DBDS:oracle.jdbc.OracleDriver
+ Driver Name: opss-data-source:oracle.jdbc.OracleDriver
+ Persistence Type: DATABASE
+ Platform: WLS
+ Scratch Dir: scratch
+ Reconfig Domain: false
+ Shared Secret Store: null
+ Extension: true
+ DisableManagementOperations: falseJDBC Properties:
+user:INFRA02_IAU_APPEND
+username:INFRA02_IAU_APPENDJDBC Properties:
+user:INFRA02_OPSS
+username:INFRA02_OPSS
+64254: Check log for more detail.
+null
+
++ retval=1
++ echo 'RetVal from Domain creation 1'
+RetVal from Domain creation 1
++ '[' 1 -ne 0 ']'
++ echo 'Domain Creation Failed.. Please check the Domain Logs'
+Domain Creation Failed.. Please check the Domain Logs
++ exit
