@@ -127,7 +127,7 @@ then
        echo -e ${DB_PASS}"\n"${DB_SCHEMA_PASS} > /u01/oracle/pwd.txt
        echo "Loading SOA RCU into database"
        # Run the RCU to load the schemas into the database
-       /u01/oracle/oracle_common/bin/rcu -silent -createRepository -databaseType ORACLE -connectString ${CONNECTION_STRING} -dbUser ${DB_USER} -dbRole Normal -useSamePasswordForAllSchemaUsers true -selectDependentsForComponents true -schemaPrefix ${RCUPREFIX} -component MDS -component MDS -component IAU -component IAU_APPEND -component IAU_VIEWER -component WLS  -component STB -f < /u01/oracle/pwd.txt >> /u01/oracle/RCU.out
+       /u01/oracle/oracle_common/bin/rcu -silent -createRepository -databaseType ORACLE -connectString ${CONNECTION_STRING} -dbUser ${DB_USER} -dbRole Normal -honorOMF -useSamePasswordForAllSchemaUsers true -selectDependentsForComponents true -schemaPrefix ${RCUPREFIX} -component MDS -component MDS -component IAU -component IAU_APPEND -component IAU_VIEWER -component WLS  -component STB -f < /u01/oracle/pwd.txt >> /u01/oracle/RCU.out
        retval=$?
 
        if [ $retval -ne 0 ];
