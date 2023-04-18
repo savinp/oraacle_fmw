@@ -1,52 +1,603 @@
-Preparing to update domain...
-Apr 16, 2023 12:17:37 PM oracle.security.jps.internal.policystore.util.JpsDataManagerUtil getDBConnection
-WARNING: Can not connect DB with URL jdbc:oracle:thin:@//myoracledb3.cgqwbwooqm3q.us-west-2.rds.amazonaws.com:1521/ORCL
-java.sql.SQLException: ORA-01017: invalid username/password; logon denied
-
-        at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:509)
-        at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:456)
-        at oracle.jdbc.driver.T4CTTIoer11.processError(T4CTTIoer11.java:451)
-        at oracle.jdbc.driver.T4CTTIfun.processError(T4CTTIfun.java:1040)
-        at oracle.jdbc.driver.T4CTTIoauthenticate.processError(T4CTTIoauthenticate.java:552)
-        at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:550)
-        at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:268)
-        at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:501)
-        at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:1292)
-        at oracle.jdbc.driver.T4CTTIoauthenticate.doOAUTH(T4CTTIoauthenticate.java:1025)
-        at oracle.jdbc.driver.T4CConnection.logon(T4CConnection.java:743)
-        at oracle.jdbc.driver.PhysicalConnection.connect(PhysicalConnection.java:793)
-        at oracle.jdbc.driver.T4CDriverExtension.getConnection(T4CDriverExtension.java:57)
-        at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:747)
-        at oracle.jdbc.driver.OracleDriver.connect(OracleDriver.java:562)
-        at java.sql.DriverManager.getConnection(DriverManager.java:664)
-        at java.sql.DriverManager.getConnection(DriverManager.java:208)
-        at oracle.security.jps.internal.policystore.util.JpsDataManagerUtil.getDBConnection(JpsDataManagerUtil.java:405)
-        at oracle.security.jps.internal.policystore.util.JpsDataManagerUtil.isNewSchema(JpsDataManagerUtil.java:246)
-        at oracle.security.jps.internal.core.datamanager.DataManagerFactoryImpl.isNewSchema(DataManagerFactoryImpl.java:252)
-        at oracle.security.jps.internal.common.rdbms.util.JpsDbBootstrapImpl.<init>(JpsDbBootstrapImpl.java:182)
-        at oracle.security.opss.tools.lifecycle.OpssLifecycleUtil.getJpsDbBootstrap(OpssLifecycleUtil.java:784)
-        at oracle.security.opss.tools.lifecycle.OpssLifecycleUtil.checkIfFarmExists(OpssLifecycleUtil.java:706)
-        at oracle.security.opss.tools.lifecycle.OpssDomainConfigImpl.checkIfFarmExists(OpssDomainConfigImpl.java:909)
-        at oracle.security.opss.tools.lifecycle.OpssDomainConfigImpl.configureDBSecurityStore(OpssDomainConfigImpl.java:602)
-        at oracle.security.opss.tools.lifecycle.OpssDomainConfigImpl.configureSubsystem(OpssDomainConfigImpl.java:489)
-        at oracle.security.opss.tools.lifecycle.OpssDomainConfigImpl.initializeSubsystem(OpssDomainConfigImpl.java:269)
-        at oracle.security.opss.tools.lifecycle.cie.OpssSecurityConfiguration.initializeSubsystem(OpssSecurityConfiguration.java:188)
-        at com.oracle.cie.domain.progress.template.importer.ImporterOPSSProcessingPhase.initialize(ImporterOPSSProcessingPhase.java:36)
-        at com.oracle.cie.domain.progress.domain.generation.OPSSProcessingPhase.processOPSS(OPSSProcessingPhase.java:154)
-        at com.oracle.cie.domain.progress.domain.generation.OPSSProcessingPhase.execute(OPSSProcessingPhase.java:54)
-        at com.oracle.cie.domain.progress.AbstractProgressGenerator.run(AbstractProgressGenerator.java:94)
-        at java.lang.Thread.run(Thread.java:750)
-
-Error: runCmd() failed. Do dumpStack() to see details.
-Problem invoking WLST - Traceback (innermost last):
-  File "/u01/oracle/container-scripts/createInfraDomain.py", line 308, in ?
-  File "/u01/oracle/container-scripts/createInfraDomain.py", line 47, in createInfraDomain
-  File "/u01/oracle/container-scripts/createInfraDomain.py", line 177, in extendDomain
-  File "/tmp/WLSTOfflineIni8225959538870161221.py", line 143, in updateDomain
-  File "/tmp/WLSTOfflineIni8225959538870161221.py", line 19, in command
-64254: Error occurred in "OPSS Processing" phase execution
-64254: Encountered error: SecurityContext:
- Domain Name: myinfraDomain
+[oracle@a924b43716f1 wlstOfflineLogs_oracle]$ tail -f cfgfwk_20230417070541.log
+2023-04-17 07:05:49,286 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor -                                                                                         read template from "/u01/oracle/wlserver/common/templates/wls/wls.jar"
+2023-04-17 07:06:01,291 INFO  [1] com.oracle.cie.domain.security.DomainSecurityService - Time required to process encryption was longer than expected:  446ms; possible lack of entropy might result in poor performance (getEncryptionContext)
+2023-04-17 07:06:01,760 INFO  [1] com.oracle.cie.domain.WLSTemplateBuilder - No HA configuration xml found in template
+2023-04-17 07:06:03,622 INFO  [1] com.oracle.cie.domain.AbstractTemplate - Setting symbol for component oracle.wls.core.app.server version 12.2.1.4.0 to oracle.wls.core.app.server_12.2.1.4.0/wlserver_ORACLE_HOME
+2023-04-17 07:06:03,773 INFO  [1] com.oracle.cie.domain.AbstractTemplate - Setting symbol for component oracle.wls.core.app.server version 12.2.1.4.0 to oracle.wls.core.app.server_12.2.1.4.0/wlserver_ORACLE_HOME
+2023-04-17 07:06:04,742 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:ForeignJndiProvider on type:class com.oracle.cie.domain.xml.configxb.impl.DomainTypeImpl
+2023-04-17 07:06:07,267 INFO  [1] com.oracle.cie.domain.assignment.impl.AssignmentServiceInternalImpl - Auto Targeting is being configured to be  enabled.
+2023-04-17 07:06:07,382 INFO  [1] com.oracle.cie.domain.assignment.impl.AssignmentServiceInternalImpl - Notifying listeners about AssignmentServiceEvent{type=ASSIGNMENT_SERVICE_CONSTRUCTED}
+2023-04-17 07:06:07,391 INFO  [1] com.oracle.cie.domain.assignment.impl.TargetingModel - AssignmentService model loadDomain >
+2023-04-17 07:06:07,446 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:ForeignJMSServerMap on type:class com.oracle.cie.domain.xml.configxb.impl.DomainTypeImpl
+2023-04-17 07:06:07,536 INFO  [1] com.oracle.cie.domain.assignment.impl.TargetingModel - AssignmentService model loadDomain <
+2023-04-17 07:06:07,537 INFO  [1] com.oracle.cie.domain.assignment.impl.AssignmentServiceInternalImpl - Notifying listeners about AssignmentServiceEvent{type=DOMAIN_INITIALIZED}
+2023-04-17 07:06:07,588 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: read template from "/u01/oracle/wlserver/common/templates/wls/wls.jar"
+2023-04-17 07:06:07,921 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - set config option DomainName to "myinfraDomain5"
+2023-04-17 07:06:07,921 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: set config option DomainName to "myinfraDomain5"
+2023-04-17 07:06:07,922 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - set config option JavaHome to "/u01/jdk"
+2023-04-17 07:06:07,922 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: set config option JavaHome to "/u01/jdk"
+2023-04-17 07:06:07,923 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - set config option ServerStartMode to "dev"
+2023-04-17 07:06:07,923 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: set config option ServerStartMode to "dev"
+2023-04-17 07:06:07,954 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:Servers on type:class com.oracle.cie.domain.xml.configxb.impl.DomainTypeImpl
+2023-04-17 07:06:07,959 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - find Servers "AdminServer" as obj0
+2023-04-17 07:06:08,055 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - find Server "AdminServer" as obj1
+2023-04-17 07:06:08,345 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: find Server "AdminServer" as obj1
+2023-04-17 07:06:08,509 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - set obj1 attribute ListenPort to "7001"
+2023-04-17 07:06:08,531 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: set obj1 attribute ListenPort to "7001"
+2023-04-17 07:06:08,534 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - set obj1 attribute Name to "myadmin"
+2023-04-17 07:06:08,560 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: set obj1 attribute Name to "myadmin"
+2023-04-17 07:06:08,561 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - find Server "myadmin" as obj2
+2023-04-17 07:06:08,567 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: find Server "myadmin" as obj2
+2023-04-17 07:06:08,568 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - create Server!SSL "myadmin!AdminServer" as obj3
+2023-04-17 07:06:08,577 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: create Server!SSL "myadmin!AdminServer" as obj3
+2023-04-17 07:06:08,604 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - set obj3 attribute Enabled to "true"
+2023-04-17 07:06:08,614 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: set obj3 attribute Enabled to "true"
+2023-04-17 07:06:08,616 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:Security on type:class com.oracle.cie.domain.xml.configxb.impl.DomainTypeImpl
+2023-04-17 07:06:08,617 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - find Security "myinfraDomain5" as obj4
+2023-04-17 07:06:08,619 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:Security on type:class com.oracle.cie.domain.xml.configxb.impl.DomainTypeImpl
+2023-04-17 07:06:08,619 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - find Security!User "myinfraDomain5!weblogic" as obj5
+2023-04-17 07:06:08,657 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: find Security!User "myinfraDomain5!weblogic" as obj5
+2023-04-17 07:06:08,668 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - find User "weblogic" as obj6
+2023-04-17 07:06:08,675 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: find User "weblogic" as obj6
+2023-04-17 07:06:08,680 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - set obj6 attribute Name to "myusername"
+2023-04-17 07:06:08,691 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: set obj6 attribute Name to "myusername"
+2023-04-17 07:06:08,694 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - set obj6 attribute Password to "********"
+2023-04-17 07:06:08,706 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: set obj6 attribute Password to "********"
+2023-04-17 07:06:08,707 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - create Cluster "infra_cluster" as obj7
+2023-04-17 07:06:08,783 INFO  [1] com.oracle.cie.domain.assignment.impl.AssignmentServiceInternalImpl - Notifying listeners about AssignmentServiceEvent{type=DOMAIN_UPDATED}
+2023-04-17 07:06:08,792 INFO  [1] com.oracle.cie.domain.assignment.impl.AssignmentServiceInternalImpl - WLSDefaultAssignmentPlugin requested commit on Targeting Model
+2023-04-17 07:06:08,796 INFO  [1] com.oracle.cie.domain.assignment.impl.AssignmentServiceInternalImpl - WLSConfigGroupsPlugin requested commit on Targeting Model
+2023-04-17 07:06:08,797 INFO  [1] com.oracle.cie.domain.assignment.impl.AssignmentServiceInternalImpl - CoherenceClusterSystemResourcePlugin requested commit on Targeting Model
+2023-04-17 07:06:08,800 INFO  [1] com.oracle.cie.domain.assignment.impl.AssignmentServiceInternalImpl - Notifying listeners about AssignmentServiceEvent{type=OPERATION_COMMITTED}
+2023-04-17 07:06:08,803 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: create Cluster "infra_cluster" as obj7
+2023-04-17 07:06:08,836 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - create Machine "machine1" as obj8
+2023-04-17 07:06:08,861 INFO  [1] com.oracle.cie.domain.assignment.impl.AssignmentServiceInternalImpl - Notifying listeners about AssignmentServiceEvent{type=DOMAIN_UPDATED}
+2023-04-17 07:06:08,862 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: create Machine "machine1" as obj8
+2023-04-17 07:06:08,873 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - create Machine!NodeManager "machine1!machine1" as obj9
+2023-04-17 07:06:08,906 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: create Machine!NodeManager "machine1!machine1" as obj9
+2023-04-17 07:06:08,919 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - set obj9 attribute ListenAddress to "localhost"
+2023-04-17 07:06:08,923 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: set obj9 attribute ListenAddress to "localhost"
+2023-04-17 07:06:08,926 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - set obj9 attribute NMType to "SSL"
+2023-04-17 07:06:08,936 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: set obj9 attribute NMType to "SSL"
+2023-04-17 07:06:08,937 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - set obj9 attribute ListenPort to "5658"
+2023-04-17 07:06:08,948 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: set obj9 attribute ListenPort to "5658"
+2023-04-17 07:06:08,949 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - create Server "infraServer5" as obj10
+2023-04-17 07:06:09,026 INFO  [1] com.oracle.cie.domain.assignment.impl.AssignmentServiceInternalImpl - Notifying listeners about AssignmentServiceEvent{type=DOMAIN_UPDATED}
+2023-04-17 07:06:09,040 INFO  [1] com.oracle.cie.domain.assignment.impl.AssignmentServiceInternalImpl - WLSDefaultAssignmentPlugin requested commit on Targeting Model
+2023-04-17 07:06:09,049 INFO  [1] com.oracle.cie.domain.assignment.impl.AssignmentServiceInternalImpl - WLSConfigGroupsPlugin requested commit on Targeting Model
+2023-04-17 07:06:09,053 INFO  [1] com.oracle.cie.domain.assignment.impl.AssignmentServiceInternalImpl - CoherenceClusterSystemResourcePlugin requested commit on Targeting Model
+2023-04-17 07:06:09,056 INFO  [1] com.oracle.cie.domain.assignment.impl.AssignmentServiceInternalImpl - Notifying listeners about AssignmentServiceEvent{type=OPERATION_COMMITTED}
+2023-04-17 07:06:09,059 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: create Server "infraServer5" as obj10
+2023-04-17 07:06:09,065 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:Servers on type:class com.oracle.cie.domain.xml.configxb.impl.DomainTypeImpl
+2023-04-17 07:06:09,065 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - find Servers "infraServer5" as obj11
+2023-04-17 07:06:09,070 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - set obj10 attribute ListenPort to "8001"
+2023-04-17 07:06:09,090 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: set obj10 attribute ListenPort to "8001"
+2023-04-17 07:06:09,092 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - set obj10 attribute Cluster to "infra_cluster"
+2023-04-17 07:06:09,258 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: set obj10 attribute Cluster to "infra_cluster"
+2023-04-17 07:06:09,258 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - create Server!SSL "infraServer5!infraServer5" as obj12
+2023-04-17 07:06:09,264 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: create Server!SSL "infraServer5!infraServer5" as obj12
+2023-04-17 07:06:09,268 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - set obj12 attribute Enabled to "true"
+2023-04-17 07:06:09,282 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: set obj12 attribute Enabled to "true"
+2023-04-17 07:06:09,282 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - set config option OverwriteDomain to "true"
+2023-04-17 07:06:09,283 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: set config option OverwriteDomain to "true"
+2023-04-17 07:06:09,283 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - validateConfig "KeyStorePasswords"
+2023-04-17 07:06:09,290 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: validateConfig "KeyStorePasswords"
+2023-04-17 07:06:09,291 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - write Domain to "/u01/oracle/user_projects/domains/myinfraDomain5"
+2023-04-17 07:06:09,525 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - warning:write Domain to "/u01/oracle/user_projects/domains/myinfraDomain5"
+2023-04-17 07:06:09,526 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - 40321: Configuration port conflict.
+40321: Duplicate Server listen ports exist in your domain configuration:
+Port 7002 on myadmin
+40321: Change conflicting ports.
+2023-04-17 07:06:09,529 INFO  [1] com.oracle.cie.domain.assignment.impl.TargetingModel - AssignmentService model loadDomain >
+2023-04-17 07:06:09,540 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:ForeignJMSServerMap on type:class com.oracle.cie.domain.xml.configxb.impl.DomainTypeImpl
+2023-04-17 07:06:09,571 INFO  [1] com.oracle.cie.domain.assignment.impl.TargetingModel - AssignmentService model loadDomain <
+2023-04-17 07:06:09,574 INFO  [1] com.oracle.cie.domain.assignment.impl.AssignmentServiceInternalImpl - Notifying listeners about AssignmentServiceEvent{type=DOMAIN_INITIALIZED}
+2023-04-17 07:06:11,448 INFO  [16] com.oracle.cie.domain.assignment.impl.TargetingModel - AssignmentService model loadDomain >
+2023-04-17 07:06:11,471 WARNING [16] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:ForeignJMSServerMap on type:class com.oracle.cie.domain.xml.configxb.impl.DomainTypeImpl
+2023-04-17 07:06:11,512 INFO  [16] com.oracle.cie.domain.assignment.impl.TargetingModel - AssignmentService model loadDomain <
+2023-04-17 07:06:11,513 INFO  [16] com.oracle.cie.domain.assignment.impl.AssignmentServiceInternalImpl - Notifying listeners about AssignmentServiceEvent{type=DOMAIN_INITIALIZED}
+2023-04-17 07:06:11,551 INFO  [16] com.oracle.cie.domain.assignment.impl.TargetingModel - AssignmentService model loadDomain >
+2023-04-17 07:06:11,568 WARNING [16] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:ForeignJMSServerMap on type:class com.oracle.cie.domain.xml.configxb.impl.DomainTypeImpl
+2023-04-17 07:06:11,602 INFO  [16] com.oracle.cie.domain.assignment.impl.TargetingModel - AssignmentService model loadDomain <
+2023-04-17 07:06:11,603 INFO  [16] com.oracle.cie.domain.assignment.impl.AssignmentServiceInternalImpl - Notifying listeners about AssignmentServiceEvent{type=DOMAIN_INITIALIZED}
+2023-04-17 07:06:16,378 WARNING [16] com.oracle.cie.domain.assignment.impl.TargetingModel - EdgeType specifies 1 destination, but found 2 destinations for source ConfigAspect Config Aspect for { [interface com.oracle.cie.domain.xml.configxb.MigratableTargetType] values [Name="infraServer5 (migratable)" UserPreferredServer="infraServer5" PostScriptFailureFatal="true" ConstrainedCandidateServer="null" PreScript="null" MillisToSleepBetweenAttempts="300000" Cluster="infra_cluster" Critical="false" NumberOfRestartAttempts="6" MigrationPolicy="manual" AdditionalMigrationAttempts="2" PostScript="null" RestartOnFailure="false" SecondsBetweenRestarts="30" DestinationServer="null" NonLocalPostAllowed="false" Id="0" Tag="[Ljava.lang.String;@40bda1e3" Notes="null" ] }
+2023-04-17 07:06:17,885 WARNING [16] com.oracle.cie.domain.startup.StartupPlanHelper - No server config startup-plan for AdminServerStartupGroup !
+2023-04-17 07:06:18,543 INFO  [16] com.oracle.cie.domain.aspect.XBeanConfigAspectHelper - "NMProperties.LogLimit" is not defined in the resources, generating value
+2023-04-17 07:06:18,546 INFO  [16] com.oracle.cie.domain.aspect.XBeanConfigAspectHelper - "NMProperties.PropertiesVersion" is not defined in the resources, generating value
+2023-04-17 07:06:18,546 INFO  [16] com.oracle.cie.domain.aspect.XBeanConfigAspectHelper - "NMProperties.AuthenticationEnabled" is not defined in the resources, generating value
+2023-04-17 07:06:18,547 INFO  [16] com.oracle.cie.domain.aspect.XBeanConfigAspectHelper - "NMProperties.LogLevel" is not defined in the resources, generating value
+2023-04-17 07:06:18,547 INFO  [16] com.oracle.cie.domain.aspect.XBeanConfigAspectHelper - "NMProperties.DomainsFileEnabled" is not defined in the resources, generating value
+2023-04-17 07:06:18,548 INFO  [16] com.oracle.cie.domain.aspect.XBeanConfigAspectHelper - "NMProperties.NativeVersionEnabled" is not defined in the resources, generating value
+2023-04-17 07:06:18,548 INFO  [16] com.oracle.cie.domain.aspect.XBeanConfigAspectHelper - "NMProperties.LogToStderr" is not defined in the resources, generating value
+2023-04-17 07:06:18,548 INFO  [16] com.oracle.cie.domain.aspect.XBeanConfigAspectHelper - "NMProperties.SecureListener" is not defined in the resources, generating value
+2023-04-17 07:06:18,549 INFO  [16] com.oracle.cie.domain.aspect.XBeanConfigAspectHelper - "NMProperties.QuitEnabled" is not defined in the resources, generating value
+2023-04-17 07:06:18,549 INFO  [16] com.oracle.cie.domain.aspect.XBeanConfigAspectHelper - "NMProperties.LogCount" is not defined in the resources, generating value
+2023-04-17 07:06:18,549 INFO  [16] com.oracle.cie.domain.aspect.XBeanConfigAspectHelper - "NMProperties.LogFile" is not defined in the resources, generating value
+2023-04-17 07:06:18,549 INFO  [16] com.oracle.cie.domain.aspect.XBeanConfigAspectHelper - "NMProperties.LogAppend" is not defined in the resources, generating value
+2023-04-17 07:06:18,549 INFO  [16] com.oracle.cie.domain.aspect.XBeanConfigAspectHelper - "NMProperties.StateCheckInterval" is not defined in the resources, generating value
+2023-04-17 07:06:18,549 INFO  [16] com.oracle.cie.domain.aspect.XBeanConfigAspectHelper - "NMProperties.CrashRecoveryEnabled" is not defined in the resources, generating value
+2023-04-17 07:06:18,550 INFO  [16] com.oracle.cie.domain.aspect.XBeanConfigAspectHelper - "NMProperties.ListenBacklog" is not defined in the resources, generating value
+2023-04-17 07:06:18,550 INFO  [16] com.oracle.cie.domain.aspect.XBeanConfigAspectHelper - "NMProperties.LogFormatter" is not defined in the resources, generating value
+2023-04-17 07:06:18,550 INFO  [16] com.oracle.cie.domain.aspect.XBeanConfigAspectHelper - "NMProperties.DomainsFile" is not defined in the resources, generating value
+2023-04-17 07:06:18,550 INFO  [16] com.oracle.cie.domain.aspect.XBeanConfigAspectHelper - "NMProperties.NodeManagerHome" is not defined in the resources, generating value
+2023-04-17 07:06:18,550 INFO  [16] com.oracle.cie.domain.aspect.XBeanConfigAspectHelper - "NMProperties.JavaHome" is not defined in the resources, generating value
+2023-04-17 07:06:18,551 INFO  [16] com.oracle.cie.domain.aspect.XBeanConfigAspectHelper - "NMProperties.ListenAddress" is not defined in the resources, generating value
+2023-04-17 07:06:18,552 INFO  [16] com.oracle.cie.domain.aspect.XBeanConfigAspectHelper - "NMProperties.ListenPort" is not defined in the resources, generating value
+2023-04-17 07:06:18,552 INFO  [16] com.oracle.cie.domain.aspect.XBeanConfigAspectHelper - "NMProperties.CustomIdentityAlias" is not defined in the resources, generating value
+2023-04-17 07:06:18,553 INFO  [16] com.oracle.cie.domain.aspect.XBeanConfigAspectHelper - "NMProperties.CustomIdentityKeyStoreFileName" is not defined in the resources, generating value
+2023-04-17 07:06:18,553 INFO  [16] com.oracle.cie.domain.aspect.XBeanConfigAspectHelper - "NMProperties.CustomIdentityKeyStorePassPhrase" is not defined in the resources, generating value
+2023-04-17 07:06:18,553 INFO  [16] com.oracle.cie.domain.aspect.XBeanConfigAspectHelper - "NMProperties.CustomIdentityKeyStoreType" is not defined in the resources, generating value
+2023-04-17 07:06:18,555 INFO  [16] com.oracle.cie.domain.aspect.XBeanConfigAspectHelper - "NMProperties.CustomIdentityPrivateKeyPassPhrase" is not defined in the resources, generating value
+2023-04-17 07:06:18,555 INFO  [16] com.oracle.cie.domain.aspect.XBeanConfigAspectHelper - "NMProperties.JavaStandardTrustKeyStorePassPhrase" is not defined in the resources, generating value
+2023-04-17 07:06:18,556 INFO  [16] com.oracle.cie.domain.aspect.XBeanConfigAspectHelper - "NMProperties.KeyStores" is not defined in the resources, generating value
+2023-04-17 07:06:18,556 INFO  [16] com.oracle.cie.domain.aspect.XBeanConfigAspectHelper - "NMProperties.WebLogicHome" is not defined in the resources, generating value
+2023-04-17 07:06:18,556 INFO  [16] com.oracle.cie.domain.aspect.XBeanConfigAspectHelper - "NMProperties.KeyFile" is not defined in the resources, generating value
+2023-04-17 07:06:18,556 INFO  [16] com.oracle.cie.domain.aspect.XBeanConfigAspectHelper - "NMProperties.KeyPassword" is not defined in the resources, generating value
+2023-04-17 07:06:18,557 INFO  [16] com.oracle.cie.domain.aspect.XBeanConfigAspectHelper - "NMProperties.CertificateFile" is not defined in the resources, generating value
+2023-04-17 07:06:18,557 INFO  [16] com.oracle.cie.domain.aspect.XBeanConfigAspectHelper - "NMProperties.NetMask" is not defined in the resources, generating value
+2023-04-17 07:06:18,558 INFO  [16] com.oracle.cie.domain.aspect.XBeanConfigAspectHelper - "NMProperties.Interface" is not defined in the resources, generating value
+2023-04-17 07:06:18,558 INFO  [16] com.oracle.cie.domain.aspect.XBeanConfigAspectHelper - "NMProperties.InterfaceName" is not defined in the resources, generating value
+2023-04-17 07:06:18,558 INFO  [16] com.oracle.cie.domain.aspect.XBeanConfigAspectHelper - "NMProperties.UseKSSForDemo" is not defined in the resources, generating value
+2023-04-17 07:06:18,558 INFO  [16] com.oracle.cie.domain.aspect.XBeanConfigAspectHelper - "NMProperties.ProcessDestroyTimeout" is not defined in the resources, generating value
+2023-04-17 07:06:18,558 INFO  [16] com.oracle.cie.domain.aspect.XBeanConfigAspectHelper - "NMProperties.DomainsDirRemoteSharingEnabled" is not defined in the resources, generating value
+2023-04-17 07:06:18,558 INFO  [16] com.oracle.cie.domain.aspect.XBeanConfigAspectHelper - "NMProperties.DomainRegistrationEnabled" is not defined in the resources, generating value
+2023-04-17 07:06:18,592 INFO  [16] com.oracle.cie.domain.DomainRegistryWrapper - The domainRegistrydocument object needs to be Initialized
+2023-04-17 07:06:18,648 INFO  [16] com.oracle.cie.domain.progress.domain.generation.PostGenerationPhase - Domain Generation Successful!
+2023-04-17 07:06:18,733 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: write Domain to "/u01/oracle/user_projects/domains/myinfraDomain5"
+2023-04-17 07:06:18,738 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - close template
+2023-04-17 07:06:18,739 INFO  [1] com.oracle.cie.domain.WLSConfigSession - closeSession() called on ConfigSession object
+2023-04-17 07:06:18,740 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: close template
+2023-04-17 07:06:18,742 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - read domain from "/u01/oracle/user_projects/domains/myinfraDomain5"
+2023-04-17 07:06:19,145 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:ForeignJndiProvider on type:class com.oracle.cie.domain.xml.configxb.impl.DomainTypeImpl
+2023-04-17 07:06:19,162 INFO  [1] com.oracle.cie.domain.assignment.impl.AssignmentServiceInternalImpl - Auto Targeting is being configured to be  enabled.
+2023-04-17 07:06:19,167 INFO  [1] com.oracle.cie.domain.assignment.impl.AssignmentServiceInternalImpl - Notifying listeners about AssignmentServiceEvent{type=ASSIGNMENT_SERVICE_CONSTRUCTED}
+2023-04-17 07:06:19,167 INFO  [1] com.oracle.cie.domain.assignment.impl.TargetingModel - AssignmentService model loadDomain >
+2023-04-17 07:06:19,181 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:ForeignJMSServerMap on type:class com.oracle.cie.domain.xml.configxb.impl.DomainTypeImpl
+2023-04-17 07:06:19,204 WARNING [1] com.oracle.cie.domain.assignment.impl.TargetingModel - EdgeType specifies 1 destination, but found 2 destinations for source ConfigAspect Config Aspect for { [interface com.oracle.cie.domain.xml.configxb.MigratableTargetType] values [Name="infraServer5 (migratable)" UserPreferredServer="infraServer5" PostScriptFailureFatal="true" ConstrainedCandidateServer="null" PreScript="null" MillisToSleepBetweenAttempts="300000" Cluster="infra_cluster" Critical="false" NumberOfRestartAttempts="6" MigrationPolicy="manual" AdditionalMigrationAttempts="2" PostScript="null" RestartOnFailure="false" SecondsBetweenRestarts="30" DestinationServer="null" NonLocalPostAllowed="false" Id="0" Tag="[Ljava.lang.String;@74f29997" Notes="null" ] }
+2023-04-17 07:06:19,222 INFO  [1] com.oracle.cie.domain.assignment.impl.TargetingModel - AssignmentService model loadDomain <
+2023-04-17 07:06:19,223 INFO  [1] com.oracle.cie.domain.assignment.impl.AssignmentServiceInternalImpl - Notifying listeners about AssignmentServiceEvent{type=DOMAIN_INITIALIZED}
+2023-04-17 07:06:19,250 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: read domain from "/u01/oracle/user_projects/domains/myinfraDomain5"
+2023-04-17 07:06:19,252 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - set config option AppDir to "/u01/oracle/user_projects/domains/applications"
+2023-04-17 07:06:19,252 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: set config option AppDir to "/u01/oracle/user_projects/domains/applications"
+2023-04-17 07:06:19,253 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - add template /u01/oracle/oracle_common/common/templates/wls/oracle.jrf_template.jar to domain
+2023-04-17 07:06:19,301 WARNING [1] com.oracle.cie.domain.template.dependency.TemplateSelectionTarget - Catalog does not have matching template for location $INFRA_ORACLE_HOME$/wlserver/common/templates/wls/wls.jar
+2023-04-17 07:06:19,419 INFO  [1] com.oracle.cie.domain.WLSTemplateBuilder - No HA configuration xml found in template
+2023-04-17 07:06:19,498 INFO  [1] com.oracle.cie.domain.WLSTemplateBuilder - No config groups xml found in template
+2023-04-17 07:06:19,499 INFO  [1] com.oracle.cie.domain.WLSTemplateBuilder - No HA configuration xml found in template
+2023-04-17 07:06:19,585 INFO  [1] com.oracle.cie.domain.WLSTemplateBuilder - No HA configuration xml found in template
+2023-04-17 07:06:19,939 INFO  [1] com.oracle.cie.domain.WLSTemplateBuilder - No config groups xml found in template
+2023-04-17 07:06:19,939 INFO  [1] com.oracle.cie.domain.WLSTemplateBuilder - No HA configuration xml found in template
+2023-04-17 07:06:20,040 INFO  [1] com.oracle.cie.domain.WLSTemplateBuilder - No config groups xml found in template
+2023-04-17 07:06:20,041 INFO  [1] com.oracle.cie.domain.WLSTemplateBuilder - No HA configuration xml found in template
+2023-04-17 07:06:20,116 INFO  [1] com.oracle.cie.domain.WLSTemplateBuilder - No HA configuration xml found in template
+2023-04-17 07:06:20,188 INFO  [1] com.oracle.cie.domain.WLSTemplateBuilder - No HA configuration xml found in template
+2023-04-17 07:06:20,257 INFO  [1] com.oracle.cie.domain.WLSTemplateBuilder - No HA configuration xml found in template
+2023-04-17 07:06:20,338 INFO  [1] com.oracle.cie.domain.WLSTemplateBuilder - No HA configuration xml found in template
+2023-04-17 07:06:20,431 INFO  [1] com.oracle.cie.domain.WLSTemplateBuilder - No HA configuration xml found in template
+2023-04-17 07:06:20,571 INFO  [1] com.oracle.cie.domain.WLSTemplateBuilder - No HA configuration xml found in template
+2023-04-17 07:06:20,863 INFO  [1] com.oracle.cie.domain.WLSTemplateBuilder - No config groups xml found in template
+2023-04-17 07:06:20,863 INFO  [1] com.oracle.cie.domain.WLSTemplateBuilder - No HA configuration xml found in template
+2023-04-17 07:06:21,001 INFO  [1] com.oracle.cie.domain.WLSTemplateBuilder - No HA configuration xml found in template
+2023-04-17 07:06:21,069 INFO  [1] com.oracle.cie.domain.WLSTemplateBuilder - No config groups xml found in template
+2023-04-17 07:06:21,070 INFO  [1] com.oracle.cie.domain.WLSTemplateBuilder - No HA configuration xml found in template
+2023-04-17 07:06:21,259 INFO  [1] com.oracle.cie.domain.WLSTemplateBuilder - No HA configuration xml found in template
+2023-04-17 07:06:21,329 INFO  [1] com.oracle.cie.domain.WLSTemplateBuilder - No HA configuration xml found in template
+2023-04-17 07:06:21,410 INFO  [1] com.oracle.cie.domain.ha.HAAutoConfiguration - Setting domain-settings using HA configuration from /u01/oracle/wlserver/common/templates/wls/wls_schema.jar
+2023-04-17 07:06:21,446 INFO  [1] com.oracle.cie.domain.AbstractTemplate - Setting symbol for component oracle.wsm.jrf version 12.2.1.4.0 to oracle.wsm.jrf_12.2.1.4.0/oracle_common_ORACLE_HOME
+2023-04-17 07:06:21,458 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:ForeignJndiProvider on type:class com.oracle.cie.domain.xml.configxb.impl.DomainTypeImpl
+2023-04-17 07:06:21,468 INFO  [1] com.oracle.cie.domain.AbstractTemplate - Setting symbol for component oracle.wsm.jrf version 12.2.1.4.0 to oracle.wsm.jrf_12.2.1.4.0/oracle_common_ORACLE_HOME
+2023-04-17 07:06:21,478 INFO  [1] com.oracle.cie.domain.AbstractTemplate - Setting symbol for component oracle.wsm.jrf version 12.2.1.4.0 to oracle.wsm.jrf_12.2.1.4.0/oracle_common_ORACLE_HOME
+2023-04-17 07:06:21,539 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:ForeignJndiProvider on type:class com.oracle.cie.domain.xml.configxb.impl.DomainTypeImpl
+2023-04-17 07:06:21,553 INFO  [1] com.oracle.cie.domain.AbstractTemplate - Setting symbol for component oracle.wls.core.app.server version 12.2.1.4.0 to oracle.wls.core.app.server_12.2.1.4.0/wlserver_ORACLE_HOME
+2023-04-17 07:06:21,574 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:ForeignJndiProvider on type:class com.oracle.cie.domain.xml.configxb.impl.DomainTypeImpl
+2023-04-17 07:06:21,576 INFO  [1] com.oracle.cie.domain.AbstractTemplate - The standard template at /u01/oracle/oracle_common/common/templates/wls/oracle.security.sso_template.jar does not include a component reference.
+2023-04-17 07:06:27,588 INFO  [1] com.oracle.cie.domain.AbstractTemplate - Adding component reference
+2023-04-17 07:06:27,590 INFO  [1] com.oracle.cie.domain.AbstractTemplate - Setting symbol for component oracle.oamclient.wls version 12.2.1.4.0 to oracle.oamclient.wls_12.2.1.4.0/oracle_common_ORACLE_HOME
+2023-04-17 07:06:27,607 INFO  [1] com.oracle.cie.domain.AbstractTemplate - Setting symbol for component oracle.wsm.jrf version 12.2.1.4.0 to oracle.wsm.jrf_12.2.1.4.0/oracle_common_ORACLE_HOME
+2023-04-17 07:06:27,636 INFO  [1] com.oracle.cie.domain.AbstractTemplate - Setting symbol for component oracle.webservices.base version 12.2.1.4.0 to oracle.webservices.base_12.2.1.4.0/oracle_common_ORACLE_HOME
+2023-04-17 07:06:27,664 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:ForeignJndiProvider on type:class com.oracle.cie.domain.xml.configxb.impl.DomainTypeImpl
+2023-04-17 07:06:27,676 INFO  [1] com.oracle.cie.domain.AbstractTemplate - Setting symbol for component oracle.jrf.j2ee version 12.2.1.4.0 to oracle.jrf.j2ee_12.2.1.4.0/oracle_common_ORACLE_HOME
+2023-04-17 07:06:27,686 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:ForeignJndiProvider on type:class com.oracle.cie.domain.xml.configxb.impl.DomainTypeImpl
+2023-04-17 07:06:27,688 WARNING [1] com.oracle.cie.domain.AbstractTemplate - Could not find component name 'oracle.fmwconfig.common.wls.shared' version 'null' referenced by the template '/u01/oracle/oracle_common/common/templates/wls/oracle.cie.runtime_template.jar'
+2023-04-17 07:06:27,688 INFO  [1] com.oracle.cie.domain.AbstractTemplate - The standard template at /u01/oracle/oracle_common/common/templates/wls/oracle.cie.runtime_template.jar does not include a component reference.
+2023-04-17 07:06:29,232 INFO  [1] com.oracle.cie.domain.AbstractTemplate - Setting symbol for component oracle.fmwconfig.common.wls.shared.internal version 12.2.1.4.0 to oracle.fmwconfig.common.wls.shared.internal_12.2.1.4.0/oracle_common_ORACLE_HOME
+2023-04-17 07:06:29,328 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:ForeignJndiProvider on type:class com.oracle.cie.domain.xml.configxb.impl.DomainTypeImpl
+2023-04-17 07:06:29,342 INFO  [1] com.oracle.cie.domain.AbstractTemplate - Setting symbol for component oracle.sdp.messaging version 12.2.1.3.0 to oracle.sdp.messaging_12.2.1.3.0/oracle_common_ORACLE_HOME
+2023-04-17 07:06:29,350 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:ForeignJndiProvider on type:class com.oracle.cie.domain.xml.configxb.impl.DomainTypeImpl
+2023-04-17 07:06:29,351 INFO  [1] com.oracle.cie.domain.AbstractTemplate - The standard template at /u01/oracle/oracle_common/common/templates/wls/oracle.opss_jrf_metadata_template.jar does not include a component reference.
+2023-04-17 07:06:31,104 INFO  [1] com.oracle.cie.domain.AbstractTemplate - Adding component reference
+2023-04-17 07:06:31,106 INFO  [1] com.oracle.cie.domain.AbstractTemplate - Setting symbol for component oracle.opss.jrf version 12.2.1.4.0 to oracle.opss.jrf_12.2.1.4.0/oracle_common_ORACLE_HOME
+2023-04-17 07:06:31,194 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:ForeignJndiProvider on type:class com.oracle.cie.domain.xml.configxb.impl.DomainTypeImpl
+2023-04-17 07:06:31,227 INFO  [1] com.oracle.cie.domain.AbstractTemplate - Setting symbol for component oracle.jrf.adfrt version 12.2.1.4.0 to oracle.jrf.adfrt_12.2.1.4.0/oracle_common_ORACLE_HOME
+2023-04-17 07:06:31,359 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:ForeignJndiProvider on type:class com.oracle.cie.domain.xml.configxb.impl.DomainTypeImpl
+2023-04-17 07:06:31,366 INFO  [1] com.oracle.cie.domain.AbstractTemplate - Setting symbol for component oracle.wls.core.app.server version 12.2.1.4.0 to oracle.wls.core.app.server_12.2.1.4.0/wlserver_ORACLE_HOME
+2023-04-17 07:06:31,383 INFO  [1] com.oracle.cie.domain.AbstractTemplate - Setting symbol for component oracle.jrf.dms version 12.2.1.4.0 to oracle.jrf.dms_12.2.1.4.0/oracle_common_ORACLE_HOME
+2023-04-17 07:06:31,404 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:ForeignJndiProvider on type:class com.oracle.cie.domain.xml.configxb.impl.DomainTypeImpl
+2023-04-17 07:06:31,419 INFO  [1] com.oracle.cie.domain.AbstractTemplate - Setting symbol for component oracle.wls.core.app.server version 12.2.1.4.0 to oracle.wls.core.app.server_12.2.1.4.0/wlserver_ORACLE_HOME
+2023-04-17 07:06:31,439 INFO  [1] com.oracle.cie.domain.AbstractTemplate - Setting symbol for component oracle.jrf.infra.fmw.wls version 12.2.1.4.0 to oracle.jrf.infra.fmw.wls_12.2.1.4.0/oracle_common_ORACLE_HOME
+2023-04-17 07:06:31,526 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:ForeignJndiProvider on type:class com.oracle.cie.domain.xml.configxb.impl.DomainTypeImpl
+2023-04-17 07:06:31,536 INFO  [1] com.oracle.cie.domain.AbstractTemplate - Setting symbol for component oracle.jrf.infra.fmw.wls version 12.2.1.4.0 to oracle.jrf.infra.fmw.wls_12.2.1.4.0/oracle_common_ORACLE_HOME
+2023-04-17 07:06:31,542 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:ForeignJndiProvider on type:class com.oracle.cie.domain.xml.configxb.impl.DomainTypeImpl
+2023-04-17 07:06:31,635 INFO  [1] com.oracle.cie.domain.assignment.impl.TargetingModel - AssignmentService model loadDomain >
+2023-04-17 07:06:31,652 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:ForeignJMSServerMap on type:class com.oracle.cie.domain.xml.configxb.impl.DomainTypeImpl
+2023-04-17 07:06:31,691 WARNING [1] com.oracle.cie.domain.assignment.impl.TargetingModel - EdgeType specifies 1 destination, but found 2 destinations for source ConfigAspect Config Aspect for { [interface com.oracle.cie.domain.xml.configxb.MigratableTargetType] values [Name="infraServer5 (migratable)" UserPreferredServer="infraServer5" PostScriptFailureFatal="true" ConstrainedCandidateServer="null" PreScript="null" MillisToSleepBetweenAttempts="300000" Cluster="infra_cluster" Critical="false" NumberOfRestartAttempts="6" MigrationPolicy="manual" AdditionalMigrationAttempts="2" PostScript="null" RestartOnFailure="false" SecondsBetweenRestarts="30" DestinationServer="null" NonLocalPostAllowed="false" Id="0" Tag="[Ljava.lang.String;@74f29997" Notes="null" ] }
+2023-04-17 07:06:31,743 INFO  [1] com.oracle.cie.domain.assignment.impl.TargetingModel - AssignmentService model loadDomain <
+2023-04-17 07:06:31,743 INFO  [1] com.oracle.cie.domain.assignment.impl.AssignmentServiceInternalImpl - Notifying listeners about AssignmentServiceEvent{type=DOMAIN_REINITIALIZED}
+2023-04-17 07:06:31,809 INFO  [1] com.oracle.cie.domain.assignment.impl.AssignmentServiceInternalImpl - Notifying listeners about AssignmentServiceEvent{type=OPERATION_COMMITTED}
+2023-04-17 07:06:31,811 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: add template /u01/oracle/oracle_common/common/templates/wls/oracle.jrf_template.jar to domain
+2023-04-17 07:06:31,811 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - add template /u01/oracle/oracle_common/common/templates/wls/oracle.jrf.ws.async_template.jar to domain
+2023-04-17 07:06:32,050 INFO  [1] com.oracle.cie.domain.WLSTemplateBuilder - No HA configuration xml found in template
+2023-04-17 07:06:32,069 INFO  [1] com.oracle.cie.domain.AbstractTemplate - Setting symbol for component oracle.jrf.j2ee version 12.2.1.4.0 to oracle.jrf.j2ee_12.2.1.4.0/oracle_common_ORACLE_HOME
+2023-04-17 07:06:32,118 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:ForeignJndiProvider on type:class com.oracle.cie.domain.xml.configxb.impl.DomainTypeImpl
+2023-04-17 07:06:32,122 INFO  [1] com.oracle.cie.domain.assignment.impl.TargetingModel - AssignmentService model loadDomain >
+2023-04-17 07:06:32,140 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:ForeignJMSServerMap on type:class com.oracle.cie.domain.xml.configxb.impl.DomainTypeImpl
+2023-04-17 07:06:32,210 WARNING [1] com.oracle.cie.domain.assignment.impl.TargetingModel - EdgeType specifies 1 destination, but found 2 destinations for source ConfigAspect Config Aspect for { [interface com.oracle.cie.domain.xml.configxb.MigratableTargetType] values [Name="infraServer5 (migratable)" UserPreferredServer="infraServer5" PostScriptFailureFatal="true" ConstrainedCandidateServer="null" PreScript="null" MillisToSleepBetweenAttempts="300000" Cluster="infra_cluster" Critical="false" NumberOfRestartAttempts="6" MigrationPolicy="manual" AdditionalMigrationAttempts="2" PostScript="null" RestartOnFailure="false" SecondsBetweenRestarts="30" DestinationServer="null" NonLocalPostAllowed="false" Id="0" Tag="[Ljava.lang.String;@74f29997" Notes="null" ] }
+2023-04-17 07:06:32,299 INFO  [1] com.oracle.cie.domain.assignment.impl.TargetingModel - AssignmentService model loadDomain <
+2023-04-17 07:06:32,299 INFO  [1] com.oracle.cie.domain.assignment.impl.AssignmentServiceInternalImpl - Notifying listeners about AssignmentServiceEvent{type=DOMAIN_REINITIALIZED}
+2023-04-17 07:06:32,371 INFO  [1] com.oracle.cie.domain.assignment.impl.AssignmentServiceInternalImpl - Notifying listeners about AssignmentServiceEvent{type=OPERATION_COMMITTED}
+2023-04-17 07:06:32,372 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: add template /u01/oracle/oracle_common/common/templates/wls/oracle.jrf.ws.async_template.jar to domain
+2023-04-17 07:06:32,373 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - add template /u01/oracle/oracle_common/common/templates/wls/oracle.wsmpm_template.jar to domain
+2023-04-17 07:06:32,420 INFO  [1] com.oracle.cie.domain.WLSTemplateBuilder - No HA configuration xml found in template
+2023-04-17 07:06:32,468 INFO  [1] com.oracle.cie.domain.AbstractTemplate - Setting symbol for component oracle.wsm.jrf version 12.2.1.4.0 to oracle.wsm.jrf_12.2.1.4.0/oracle_common_ORACLE_HOME
+2023-04-17 07:06:32,512 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:ForeignJndiProvider on type:class com.oracle.cie.domain.xml.configxb.impl.DomainTypeImpl
+2023-04-17 07:06:32,524 INFO  [1] com.oracle.cie.domain.assignment.impl.TargetingModel - AssignmentService model loadDomain >
+2023-04-17 07:06:32,534 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:ForeignJMSServerMap on type:class com.oracle.cie.domain.xml.configxb.impl.DomainTypeImpl
+2023-04-17 07:06:32,583 WARNING [1] com.oracle.cie.domain.assignment.impl.TargetingModel - EdgeType specifies 1 destination, but found 2 destinations for source ConfigAspect Config Aspect for { [interface com.oracle.cie.domain.xml.configxb.MigratableTargetType] values [Name="infraServer5 (migratable)" UserPreferredServer="infraServer5" PostScriptFailureFatal="true" ConstrainedCandidateServer="null" PreScript="null" MillisToSleepBetweenAttempts="300000" Cluster="infra_cluster" Critical="false" NumberOfRestartAttempts="6" MigrationPolicy="manual" AdditionalMigrationAttempts="2" PostScript="null" RestartOnFailure="false" SecondsBetweenRestarts="30" DestinationServer="null" NonLocalPostAllowed="false" Id="0" Tag="[Ljava.lang.String;@74f29997" Notes="null" ] }
+2023-04-17 07:06:32,661 INFO  [1] com.oracle.cie.domain.assignment.impl.TargetingModel - AssignmentService model loadDomain <
+2023-04-17 07:06:32,662 INFO  [1] com.oracle.cie.domain.assignment.impl.AssignmentServiceInternalImpl - Notifying listeners about AssignmentServiceEvent{type=DOMAIN_REINITIALIZED}
+2023-04-17 07:06:32,709 INFO  [1] com.oracle.cie.domain.assignment.impl.AssignmentServiceInternalImpl - Notifying listeners about AssignmentServiceEvent{type=OPERATION_COMMITTED}
+2023-04-17 07:06:32,712 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: add template /u01/oracle/oracle_common/common/templates/wls/oracle.wsmpm_template.jar to domain
+2023-04-17 07:06:32,714 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - add template /u01/oracle/oracle_common/common/templates/wls/oracle.ums_template.jar to domain
+2023-04-17 07:06:32,997 INFO  [1] com.oracle.cie.domain.AbstractTemplate - Setting symbol for component oracle.sdp.messaging version 12.2.1.3.0 to oracle.sdp.messaging_12.2.1.3.0/oracle_common_ORACLE_HOME
+2023-04-17 07:06:33,164 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:ForeignJndiProvider on type:class com.oracle.cie.domain.xml.configxb.impl.DomainTypeImpl
+2023-04-17 07:06:33,181 INFO  [1] com.oracle.cie.domain.assignment.impl.TargetingModel - AssignmentService model loadDomain >
+2023-04-17 07:06:33,210 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:ForeignJMSServerMap on type:class com.oracle.cie.domain.xml.configxb.impl.DomainTypeImpl
+2023-04-17 07:06:33,315 WARNING [1] com.oracle.cie.domain.assignment.impl.TargetingModel - EdgeType specifies 1 destination, but found 2 destinations for source ConfigAspect Config Aspect for { [interface com.oracle.cie.domain.xml.configxb.MigratableTargetType] values [Name="infraServer5 (migratable)" UserPreferredServer="infraServer5" PostScriptFailureFatal="true" ConstrainedCandidateServer="null" PreScript="null" MillisToSleepBetweenAttempts="300000" Cluster="infra_cluster" Critical="false" NumberOfRestartAttempts="6" MigrationPolicy="manual" AdditionalMigrationAttempts="2" PostScript="null" RestartOnFailure="false" SecondsBetweenRestarts="30" DestinationServer="null" NonLocalPostAllowed="false" Id="0" Tag="[Ljava.lang.String;@74f29997" Notes="null" ] }
+2023-04-17 07:06:33,421 INFO  [1] com.oracle.cie.domain.assignment.impl.TargetingModel - AssignmentService model loadDomain <
+2023-04-17 07:06:33,424 INFO  [1] com.oracle.cie.domain.assignment.impl.AssignmentServiceInternalImpl - Notifying listeners about AssignmentServiceEvent{type=DOMAIN_REINITIALIZED}
+2023-04-17 07:06:33,544 INFO  [1] com.oracle.cie.domain.assignment.impl.AssignmentServiceInternalImpl - Notifying listeners about AssignmentServiceEvent{type=OPERATION_COMMITTED}
+2023-04-17 07:06:33,546 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: add template /u01/oracle/oracle_common/common/templates/wls/oracle.ums_template.jar to domain
+2023-04-17 07:06:33,550 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - add template /u01/oracle/em/common/templates/wls/oracle.em_wls_template.jar to domain
+2023-04-17 07:06:33,621 INFO  [1] com.oracle.cie.domain.WLSTemplateBuilder - No HA configuration xml found in template
+2023-04-17 07:06:33,673 INFO  [1] com.oracle.cie.domain.WLSTemplateBuilder - No HA configuration xml found in template
+2023-04-17 07:06:33,734 INFO  [1] com.oracle.cie.domain.WLSTemplateBuilder - No HA configuration xml found in template
+2023-04-17 07:06:33,793 INFO  [1] com.oracle.cie.domain.WLSTemplateBuilder - No HA configuration xml found in template
+2023-04-17 07:06:33,853 INFO  [1] com.oracle.cie.domain.WLSTemplateBuilder - No HA configuration xml found in template
+2023-04-17 07:06:33,889 INFO  [1] com.oracle.cie.domain.AbstractTemplate - Setting symbol for component oracle.webcenter.wccore version 12.2.1.4.0 to oracle.webcenter.wccore_12.2.1.4.0/oracle_common_ORACLE_HOME
+2023-04-17 07:06:33,901 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:ForeignJndiProvider on type:class com.oracle.cie.domain.xml.configxb.impl.DomainTypeImpl
+2023-04-17 07:06:33,910 INFO  [1] com.oracle.cie.domain.AbstractTemplate - Setting symbol for component oracle.webcenter.wccore version 12.2.1.4.0 to oracle.webcenter.wccore_12.2.1.4.0/oracle_common_ORACLE_HOME
+2023-04-17 07:06:33,920 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:ForeignJndiProvider on type:class com.oracle.cie.domain.xml.configxb.impl.DomainTypeImpl
+2023-04-17 07:06:33,938 INFO  [1] com.oracle.cie.domain.AbstractTemplate - Setting symbol for component oracle.wsm.console.core version 12.2.1.4.0 to oracle.wsm.console.core_12.2.1.4.0/oracle_common_ORACLE_HOME
+2023-04-17 07:06:33,952 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:ForeignJndiProvider on type:class com.oracle.cie.domain.xml.configxb.impl.DomainTypeImpl
+2023-04-17 07:06:33,966 INFO  [1] com.oracle.cie.domain.AbstractTemplate - Setting symbol for component oracle.sysman.fmw.as version 12.2.1.4.0 to oracle.sysman.fmw.as_12.2.1.4.0/em_ORACLE_HOME
+2023-04-17 07:06:33,986 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:ForeignJndiProvider on type:class com.oracle.cie.domain.xml.configxb.impl.DomainTypeImpl
+2023-04-17 07:06:34,001 INFO  [1] com.oracle.cie.domain.AbstractTemplate - Setting symbol for component oracle.sysman.fmw.core version 12.2.1.4.0 to oracle.sysman.fmw.core_12.2.1.4.0/em_ORACLE_HOME
+2023-04-17 07:06:34,055 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:ForeignJndiProvider on type:class com.oracle.cie.domain.xml.configxb.impl.DomainTypeImpl
+2023-04-17 07:06:34,068 INFO  [1] com.oracle.cie.domain.assignment.impl.TargetingModel - AssignmentService model loadDomain >
+2023-04-17 07:06:34,085 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:ForeignJMSServerMap on type:class com.oracle.cie.domain.xml.configxb.impl.DomainTypeImpl
+2023-04-17 07:06:34,151 WARNING [1] com.oracle.cie.domain.assignment.impl.TargetingModel - EdgeType specifies 1 destination, but found 2 destinations for source ConfigAspect Config Aspect for { [interface com.oracle.cie.domain.xml.configxb.MigratableTargetType] values [Name="infraServer5 (migratable)" UserPreferredServer="infraServer5" PostScriptFailureFatal="true" ConstrainedCandidateServer="null" PreScript="null" MillisToSleepBetweenAttempts="300000" Cluster="infra_cluster" Critical="false" NumberOfRestartAttempts="6" MigrationPolicy="manual" AdditionalMigrationAttempts="2" PostScript="null" RestartOnFailure="false" SecondsBetweenRestarts="30" DestinationServer="null" NonLocalPostAllowed="false" Id="0" Tag="[Ljava.lang.String;@74f29997" Notes="null" ] }
+2023-04-17 07:06:34,248 INFO  [1] com.oracle.cie.domain.assignment.impl.TargetingModel - AssignmentService model loadDomain <
+2023-04-17 07:06:34,248 INFO  [1] com.oracle.cie.domain.assignment.impl.AssignmentServiceInternalImpl - Notifying listeners about AssignmentServiceEvent{type=DOMAIN_REINITIALIZED}
+2023-04-17 07:06:34,314 INFO  [1] com.oracle.cie.domain.assignment.impl.AssignmentServiceInternalImpl - Notifying listeners about AssignmentServiceEvent{type=OPERATION_COMMITTED}
+2023-04-17 07:06:34,316 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: add template /u01/oracle/em/common/templates/wls/oracle.em_wls_template.jar to domain
+2023-04-17 07:06:34,317 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - find JDBCSystemResource "LocalSvcTblDataSource" as obj13
+2023-04-17 07:06:34,320 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: find JDBCSystemResource "LocalSvcTblDataSource" as obj13
+2023-04-17 07:06:34,348 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - find JDBCSystemResource!JdbcResource "LocalSvcTblDataSource!LocalSvcTblDataSource" as obj14
+2023-04-17 07:06:34,352 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: find JDBCSystemResource!JdbcResource "LocalSvcTblDataSource!LocalSvcTblDataSource" as obj14
+2023-04-17 07:06:34,374 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:Name on type:class com.oracle.cie.domain.xml.configxb.weblogic.x90.impl.JDBCDriverParamsTypeImpl
+2023-04-17 07:06:34,405 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:Name on type:class com.oracle.cie.domain.xml.configxb.weblogic.x90.impl.JDBCConnectionPoolParamsTypeImpl
+2023-04-17 07:06:34,439 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:Name on type:class com.oracle.cie.domain.xml.configxb.weblogic.x90.impl.JDBCDataSourceParamsTypeImpl
+2023-04-17 07:06:34,441 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:Name on type:class com.oracle.cie.domain.xml.configxb.weblogic.x90.impl.JDBCDriverParamsTypeImpl
+2023-04-17 07:06:34,442 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - find JDBCSystemResource!JdbcResource!JDBCDriverParams "LocalSvcTblDataSource!LocalSvcTblDataSource!NO_NAME_0" as obj15
+2023-04-17 07:06:34,447 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: find JDBCSystemResource!JdbcResource!JDBCDriverParams "LocalSvcTblDataSource!LocalSvcTblDataSource!NO_NAME_0" as obj15
+2023-04-17 07:06:34,460 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:Name on type:class com.oracle.cie.domain.xml.configxb.weblogic.x90.impl.JDBCDriverParamsTypeImpl
+2023-04-17 07:06:34,460 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:Name on type:class com.oracle.cie.domain.xml.configxb.weblogic.x90.impl.JDBCPropertiesTypeImpl
+2023-04-17 07:06:34,462 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - set obj15 attribute DriverName to "oracle.jdbc.OracleDriver"
+2023-04-17 07:06:34,475 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: set obj15 attribute DriverName to "oracle.jdbc.OracleDriver"
+2023-04-17 07:06:34,477 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - set obj15 attribute URL to "jdbc:oracle:thin:@myoracledb3.cgqwbwooqm3q.us-west-2.rds.amazonaws.com:1521/ORCL"
+2023-04-17 07:06:34,481 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: set obj15 attribute URL to "jdbc:oracle:thin:@myoracledb3.cgqwbwooqm3q.us-west-2.rds.amazonaws.com:1521/ORCL"
+2023-04-17 07:06:34,482 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - set obj15 attribute PasswordEncrypted to "********"
+2023-04-17 07:06:34,488 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: set obj15 attribute PasswordEncrypted to "********"
+2023-04-17 07:06:34,489 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:Name on type:class com.oracle.cie.domain.xml.configxb.weblogic.x90.impl.JDBCDriverParamsTypeImpl
+2023-04-17 07:06:34,490 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:Name on type:class com.oracle.cie.domain.xml.configxb.weblogic.x90.impl.JDBCPropertiesTypeImpl
+2023-04-17 07:06:34,490 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - find JDBCSystemResource!JdbcResource!JDBCDriverParams!Properties "LocalSvcTblDataSource!LocalSvcTblDataSource!NO_NAME_0!NO_NAME_0" as obj16
+2023-04-17 07:06:34,491 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:Name on type:class com.oracle.cie.domain.xml.configxb.weblogic.x90.impl.JDBCDriverParamsTypeImpl
+2023-04-17 07:06:34,493 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: find JDBCSystemResource!JdbcResource!JDBCDriverParams!Properties "LocalSvcTblDataSource!LocalSvcTblDataSource!NO_NAME_0!NO_NAME_0" as obj16
+2023-04-17 07:06:34,502 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:Name on type:class com.oracle.cie.domain.xml.configxb.weblogic.x90.impl.JDBCDriverParamsTypeImpl
+2023-04-17 07:06:34,503 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:Name on type:class com.oracle.cie.domain.xml.configxb.weblogic.x90.impl.JDBCPropertiesTypeImpl
+2023-04-17 07:06:34,512 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - find JDBCSystemResource!JdbcResource!JDBCDriverParams!Properties!Property "LocalSvcTblDataSource!LocalSvcTblDataSource!NO_NAME_0!NO_NAME_0!user" as obj17
+2023-04-17 07:06:34,513 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:Name on type:class com.oracle.cie.domain.xml.configxb.weblogic.x90.impl.JDBCDriverParamsTypeImpl
+2023-04-17 07:06:34,514 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:Name on type:class com.oracle.cie.domain.xml.configxb.weblogic.x90.impl.JDBCPropertiesTypeImpl
+2023-04-17 07:06:34,522 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: find JDBCSystemResource!JdbcResource!JDBCDriverParams!Properties!Property "LocalSvcTblDataSource!LocalSvcTblDataSource!NO_NAME_0!NO_NAME_0!user" as obj17
+2023-04-17 07:06:34,531 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:Name on type:class com.oracle.cie.domain.xml.configxb.weblogic.x90.impl.JDBCDriverParamsTypeImpl
+2023-04-17 07:06:34,532 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:Name on type:class com.oracle.cie.domain.xml.configxb.weblogic.x90.impl.JDBCPropertiesTypeImpl
+2023-04-17 07:06:34,542 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - set obj17 attribute Value to "INFRAMA_STB"
+2023-04-17 07:06:34,543 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:Name on type:class com.oracle.cie.domain.xml.configxb.weblogic.x90.impl.JDBCDriverParamsTypeImpl
+2023-04-17 07:06:34,544 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:Name on type:class com.oracle.cie.domain.xml.configxb.weblogic.x90.impl.JDBCPropertiesTypeImpl
+2023-04-17 07:06:34,554 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: set obj17 attribute Value to "INFRAMA_STB"
+2023-04-17 07:07:21,644 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,078 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,081 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,081 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,082 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,082 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,082 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,082 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,088 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,089 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,089 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,090 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,091 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,092 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,094 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,096 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,098 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,099 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,100 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,100 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,101 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,101 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,102 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,102 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,102 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,103 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,106 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,106 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,110 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,112 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,113 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,113 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,113 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,114 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,116 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,116 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,117 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,118 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,118 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,119 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,119 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,119 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,120 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,120 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,121 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,123 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,125 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,126 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,127 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,128 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,129 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,130 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,130 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,130 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,131 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,131 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,134 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:JDBCDataSourceParams on type:class com.oracle.cie.domain.xml.configxb.impl.JDBCSystemResourceTypeImpl
+2023-04-17 07:07:22,137 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - associating server groups with infraServer5
+2023-04-17 07:07:22,184 INFO  [1] com.oracle.cie.domain.assignment.impl.AssignmentServiceInternalImpl - Notifying listeners about ExternalAssignmentEvent{aspect=null, eventType='Refresh', val=null}
+2023-04-17 07:07:22,945 INFO  [1] com.oracle.cie.domain.assignment.impl.AssignmentServiceInternalImpl - Notifying listeners about AssignmentServiceEvent{type=OPERATION_COMMITTED}
+2023-04-17 07:07:22,947 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{JMSServer, UMSJMSServer}
+2023-04-17 07:07:22,949 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{AllJMSQueues, JRFWSAsyncRequestErrorQueue}
+2023-04-17 07:07:22,952 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{MigratableTarget, infraServer5 (migratable)}
+2023-04-17 07:07:22,953 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{JMSServer, JRFWSAsyncJmsServer}
+2023-04-17 07:07:22,955 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{JMSSystemResource.SubDeployment, JRFWS_JMS_MODULE_SUBDEPLOYMENT_JRFWSJMSServer}
+2023-04-17 07:07:22,956 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{AllJMSQueues, OraSDPM/Queues/OraSDPMAppDefRcvErrorQ1}
+2023-04-17 07:07:22,963 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{AllJMSQueues, OraSDPM/Queues/OraSDPMEngineRcvQ1}
+2023-04-17 07:07:22,971 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{UniformDistributedQueue, dist_JRFWSAsyncRequestErrorQueue_auto_1}
+2023-04-17 07:07:22,973 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{UniformDistributedQueue, dist_JRFWSAsyncResponseQueue_auto_1}
+2023-04-17 07:07:22,975 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{JDBCStore, UMSJMSJDBCStore}
+2023-04-17 07:07:22,976 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{AllJMSQueues, OraSDPM/Queues/OraSDPMAppDefRcvQ1}
+2023-04-17 07:07:22,982 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{AllJMSQueues, OraSDPM/Queues/OraSDPMWSRcvQ1}
+2023-04-17 07:07:22,985 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{FileStore, JRFWSAsyncFileStore_auto_1}
+2023-04-17 07:07:22,986 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{FileStore, UMSJMSFileStore}
+2023-04-17 07:07:22,987 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{UniformDistributedQueue, dist_JRFWSAsyncResponseErrorQueue_auto_1}
+2023-04-17 07:07:22,989 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{JMSServer, JRFWSAsyncJmsServer_auto_1}
+2023-04-17 07:07:22,990 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{JMSSystemResource.SubDeployment, JRFWS_JMS_MODULE_SUBDEPLOYMENT_JRFWSJMSServer_auto_1}
+2023-04-17 07:07:22,991 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{JMSSystemResource.SubDeployment, UMSJMSSubDeployment}
+2023-04-17 07:07:22,992 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{AllJMSQueues, OraSDPM/Queues/OraSDPMDriverDefSndQ1}
+2023-04-17 07:07:22,994 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{AllJMSQueues, OraSDPM/Queues/OraSDPMEngineSndQ1}
+2023-04-17 07:07:22,997 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{AllJMSQueues, JRFWSAsyncRequestQueue}
+2023-04-17 07:07:23,001 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{FileStore, JRFWSAsyncFileStore}
+2023-04-17 07:07:23,003 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{UniformDistributedQueue, dist_JRFWSAsyncRequestQueue_auto_1}
+2023-04-17 07:07:23,005 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{AllJMSQueues, OraSDPM/Queues/OraSDPMEnginePendingRcvQ}
+2023-04-17 07:07:23,008 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{AllJMSQueues, JRFWSAsyncResponseQueue}
+2023-04-17 07:07:23,009 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{AllJMSQueues, JRFWSAsyncResponseErrorQueue}
+2023-04-17 07:07:23,010 INFO  [1] com.oracle.cie.domain.assignment.impl.AssignmentServiceInternalImpl - Notifying listeners about ExternalAssignmentEvent{aspect=null, eventType='Refresh', val=null}
+2023-04-17 07:07:23,100 WARNING [1] com.oracle.cie.domain.assignment.impl.TargetingModel - EdgeType specifies 1 destination, but found 2 destinations for source ConfigAspect Config Aspect for { [interface com.oracle.cie.domain.xml.configxb.MigratableTargetType] values [Name="infraServer5 (migratable)" UserPreferredServer="infraServer5" PostScriptFailureFatal="true" ConstrainedCandidateServer="null" PreScript="null" MillisToSleepBetweenAttempts="300000" Cluster="infra_cluster" Critical="false" NumberOfRestartAttempts="6" MigrationPolicy="manual" AdditionalMigrationAttempts="2" PostScript="null" RestartOnFailure="false" SecondsBetweenRestarts="30" DestinationServer="null" NonLocalPostAllowed="false" Id="0" Tag="[Ljava.lang.String;@68c5db1" Notes="null" ] }
+2023-04-17 07:07:23,430 INFO  [1] com.oracle.cie.domain.assignment.impl.AssignmentServiceInternalImpl - Notifying listeners about AssignmentServiceEvent{type=OPERATION_COMMITTED}
+2023-04-17 07:07:23,431 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{MigratableTarget, infraServer5 (migratable)}
+2023-04-17 07:07:23,432 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{JMSSystemResource.SubDeployment, JRFWS_JMS_MODULE_SUBDEPLOYMENT_JRFWSJMSServer}
+2023-04-17 07:07:23,433 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{UniformDistributedQueue, dist_OraSDPM/Queues/OraSDPMAppDefRcvErrorQ1_auto_1}
+2023-04-17 07:07:23,439 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{UniformDistributedQueue, dist_OraSDPM/Queues/OraSDPMDriverDefSndQ1_auto_1}
+2023-04-17 07:07:23,440 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{UniformDistributedQueue, dist_JRFWSAsyncRequestQueue_auto_1}
+2023-04-17 07:07:23,442 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{JMSServer, JRFWSAsyncJmsServer_auto_1}
+2023-04-17 07:07:23,445 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{UniformDistributedQueue, dist_OraSDPM/Queues/OraSDPMEnginePendingRcvQ_auto_1}
+2023-04-17 07:07:23,447 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{JMSSystemResource.SubDeployment, JRFWS_JMS_MODULE_SUBDEPLOYMENT_JRFWSJMSServer_auto_1}
+2023-04-17 07:07:23,449 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{JDBCStore, UMSJMSJDBCStore_auto_1}
+2023-04-17 07:07:23,450 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{JMSSystemResource.SubDeployment, UMSJMSSubDeployment_auto_1}
+2023-04-17 07:07:23,455 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{UniformDistributedQueue, dist_JRFWSAsyncRequestQueue}
+2023-04-17 07:07:23,456 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{FileStore, UMSJMSFileStore_auto_1}
+2023-04-17 07:07:23,457 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{FileStore, JRFWSAsyncFileStore_auto_1}
+2023-04-17 07:07:23,458 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{FileStore, JRFWSAsyncFileStore}
+2023-04-17 07:07:23,461 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{UniformDistributedQueue, dist_OraSDPM/Queues/OraSDPMEngineRcvQ1_auto_1}
+2023-04-17 07:07:23,463 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{UniformDistributedQueue, dist_OraSDPM/Queues/OraSDPMAppDefRcvQ1_auto_1}
+2023-04-17 07:07:23,465 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{JMSServer, JRFWSAsyncJmsServer}
+2023-04-17 07:07:23,466 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{UniformDistributedQueue, dist_JRFWSAsyncResponseQueue_auto_1}
+2023-04-17 07:07:23,469 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{UniformDistributedQueue, dist_JRFWSAsyncResponseQueue}
+2023-04-17 07:07:23,471 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{UniformDistributedQueue, dist_JRFWSAsyncResponseErrorQueue}
+2023-04-17 07:07:23,472 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{UniformDistributedQueue, dist_JRFWSAsyncRequestErrorQueue_auto_1}
+2023-04-17 07:07:23,477 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{UniformDistributedQueue, dist_OraSDPM/Queues/OraSDPMWSRcvQ1_auto_1}
+2023-04-17 07:07:23,480 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{UniformDistributedQueue, dist_JRFWSAsyncResponseErrorQueue_auto_1}
+2023-04-17 07:07:23,481 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{UniformDistributedQueue, dist_OraSDPM/Queues/OraSDPMEngineSndQ1_auto_1}
+2023-04-17 07:07:23,485 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{UniformDistributedQueue, dist_JRFWSAsyncRequestErrorQueue}
+2023-04-17 07:07:23,487 INFO  [1] com.oracle.cie.domain.assignment.impl.Vertex - Vertex{JMSServer, UMSJMSServer_auto_1}
+2023-04-17 07:07:23,491 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: associating server groups with infraServer5
+2023-04-17 07:07:23,492 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:Servers on type:class com.oracle.cie.domain.xml.configxb.impl.DomainTypeImpl
+2023-04-17 07:07:23,493 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - find Servers "infraServer5" as obj18
+2023-04-17 07:07:23,497 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - find Server "infraServer5" as obj19
+2023-04-17 07:07:23,501 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: find Server "infraServer5" as obj19
+2023-04-17 07:07:23,510 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - find CoherenceClusterSystemResource "defaultCoherenceCluster" as obj20
+2023-04-17 07:07:23,518 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: find CoherenceClusterSystemResource "defaultCoherenceCluster" as obj20
+2023-04-17 07:07:23,529 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - set obj19 attribute CoherenceClusterSystemResource to "defaultCoherenceCluster"
+2023-04-17 07:07:23,548 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: set obj19 attribute CoherenceClusterSystemResource to "defaultCoherenceCluster"
+2023-04-17 07:07:23,549 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - find Cluster "infra_cluster" as obj21
+2023-04-17 07:07:23,550 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: find Cluster "infra_cluster" as obj21
+2023-04-17 07:07:23,552 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - set obj21 attribute CoherenceClusterSystemResource to "defaultCoherenceCluster"
+2023-04-17 07:07:23,555 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: set obj21 attribute CoherenceClusterSystemResource to "defaultCoherenceCluster"
+2023-04-17 07:07:23,564 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - set obj20 attribute Target to "infra_cluster"
+2023-04-17 07:07:23,568 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: set obj20 attribute Target to "infra_cluster"
+2023-04-17 07:07:23,569 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - validateConfig "KeyStorePasswords"
+2023-04-17 07:07:23,572 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - succeed: validateConfig "KeyStorePasswords"
+2023-04-17 07:07:23,574 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - update domain
+2023-04-17 07:07:32,807 WARNING [1] com.oracle.cie.domain.jdbc.WlsDBHelper - Invalid section
+com.oracle.cie.domain.ValidateException: 40318: Invalid or missing JDBC datasource connection parameters.
+40318: The JDBC datasource required parameters are invalid or missing.
+40318: Correct the datasource connection parameters.
+        at com.oracle.cie.domain.jdbc.WlsDBHelper.validateJdbcResourceAspect(WlsDBHelper.java:691)
+        at com.oracle.cie.domain.DomainChecker.getInvalidSectionsDetails(DomainChecker.java:435)
+        at com.oracle.cie.domain.WLSGeneratorHelper.validateConfig(WLSGeneratorHelper.java:197)
+        at com.oracle.cie.domain.script.ScriptExecutor.updateDomain(ScriptExecutor.java:2471)
+        at com.oracle.cie.domain.script.jython.WLScriptContext.updateDomain(WLScriptContext.java:1217)
+        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.lang.reflect.Method.invoke(Method.java:498)
+        at com.oracle.cie.domain.script.jython.WLSTState.processCommand(WLSTState.java:226)
+        at com.oracle.cie.domain.script.jython.WLScriptContext.runCmd(WLScriptContext.java:732)
+        at sun.reflect.GeneratedMethodAccessor125.invoke(Unknown Source)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.lang.reflect.Method.invoke(Method.java:498)
+        at org.python.core.PyReflectedFunction.__call__(Unknown Source)
+        at org.python.core.PyMethod.__call__(Unknown Source)
+        at org.python.core.PyObject.__call__(Unknown Source)
+        at org.python.core.PyInstance.invoke(Unknown Source)
+        at org.python.pycode._pyx5.command$1(/tmp/WLSTOfflineIni1549393427525871121.py:19)
+        at org.python.pycode._pyx5.call_function(/tmp/WLSTOfflineIni1549393427525871121.py)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyFunction.__call__(PyFunction.java:181)
+        at org.python.pycode._pyx5.updateDomain$34(/tmp/WLSTOfflineIni1549393427525871121.py:143)
+        at org.python.pycode._pyx5.call_function(/tmp/WLSTOfflineIni1549393427525871121.py)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyFunction.__call__(PyFunction.java:178)
+        at org.python.pycode._pyx96.extendDomain$5(/u01/oracle/container-scripts/createInfraDomain.py:177)
+        at org.python.pycode._pyx96.call_function(/u01/oracle/container-scripts/createInfraDomain.py)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyFunction.__call__(PyFunction.java:199)
+        at org.python.core.PyMethod.__call__(Unknown Source)
+        at org.python.core.PyObject.__call__(Unknown Source)
+        at org.python.core.PyObject.invoke(Unknown Source)
+        at org.python.pycode._pyx96.createInfraDomain$3(/u01/oracle/container-scripts/createInfraDomain.py:47)
+        at org.python.pycode._pyx96.call_function(/u01/oracle/container-scripts/createInfraDomain.py)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyFunction.__call__(PyFunction.java:199)
+        at org.python.core.PyMethod.__call__(Unknown Source)
+        at org.python.core.PyObject.__call__(Unknown Source)
+        at org.python.core.PyObject.invoke(Unknown Source)
+        at org.python.pycode._pyx96.f$0(/u01/oracle/container-scripts/createInfraDomain.py:308)
+        at org.python.pycode._pyx96.call_function(/u01/oracle/container-scripts/createInfraDomain.py)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyCode.call(Unknown Source)
+        at org.python.core.Py.runCode(Py.java:1226)
+        at org.python.util.PythonInterpreter.execfile(Unknown Source)
+        at weblogic.management.scripting.WLST.main(WLST.java:186)
+        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.lang.reflect.Method.invoke(Method.java:498)
+        at weblogic.WLST.main(WLST.java:47)
+2023-04-17 07:07:32,808 WARNING [1] com.oracle.cie.domain.jdbc.WlsDBHelper - Datasource validation error: User Messaging Service: 64205: Unspecified property.
+64205: The Password must be specified.
+64205: Specify the property.
+User Messaging Service: 64207: Mismatched passwords.
+64207: The Password and Confirm Password do not match.
+64207: Correct the password.
+com.oracle.cie.domain.ValidateException: 40318: Invalid or missing JDBC datasource connection parameters.
+40318: The JDBC datasource required parameters are invalid or missing.
+40318: Correct the datasource connection parameters.
+        at com.oracle.cie.domain.jdbc.WlsDBHelper.validateJdbcResourceAspect(WlsDBHelper.java:691)
+        at com.oracle.cie.domain.DomainChecker.getInvalidSectionsDetails(DomainChecker.java:435)
+        at com.oracle.cie.domain.WLSGeneratorHelper.validateConfig(WLSGeneratorHelper.java:197)
+        at com.oracle.cie.domain.script.ScriptExecutor.updateDomain(ScriptExecutor.java:2471)
+        at com.oracle.cie.domain.script.jython.WLScriptContext.updateDomain(WLScriptContext.java:1217)
+        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.lang.reflect.Method.invoke(Method.java:498)
+        at com.oracle.cie.domain.script.jython.WLSTState.processCommand(WLSTState.java:226)
+        at com.oracle.cie.domain.script.jython.WLScriptContext.runCmd(WLScriptContext.java:732)
+        at sun.reflect.GeneratedMethodAccessor125.invoke(Unknown Source)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.lang.reflect.Method.invoke(Method.java:498)
+        at org.python.core.PyReflectedFunction.__call__(Unknown Source)
+        at org.python.core.PyMethod.__call__(Unknown Source)
+        at org.python.core.PyObject.__call__(Unknown Source)
+        at org.python.core.PyInstance.invoke(Unknown Source)
+        at org.python.pycode._pyx5.command$1(/tmp/WLSTOfflineIni1549393427525871121.py:19)
+        at org.python.pycode._pyx5.call_function(/tmp/WLSTOfflineIni1549393427525871121.py)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyFunction.__call__(PyFunction.java:181)
+        at org.python.pycode._pyx5.updateDomain$34(/tmp/WLSTOfflineIni1549393427525871121.py:143)
+        at org.python.pycode._pyx5.call_function(/tmp/WLSTOfflineIni1549393427525871121.py)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyFunction.__call__(PyFunction.java:178)
+        at org.python.pycode._pyx96.extendDomain$5(/u01/oracle/container-scripts/createInfraDomain.py:177)
+        at org.python.pycode._pyx96.call_function(/u01/oracle/container-scripts/createInfraDomain.py)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyFunction.__call__(PyFunction.java:199)
+        at org.python.core.PyMethod.__call__(Unknown Source)
+        at org.python.core.PyObject.__call__(Unknown Source)
+        at org.python.core.PyObject.invoke(Unknown Source)
+        at org.python.pycode._pyx96.createInfraDomain$3(/u01/oracle/container-scripts/createInfraDomain.py:47)
+        at org.python.pycode._pyx96.call_function(/u01/oracle/container-scripts/createInfraDomain.py)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyFunction.__call__(PyFunction.java:199)
+        at org.python.core.PyMethod.__call__(Unknown Source)
+        at org.python.core.PyObject.__call__(Unknown Source)
+        at org.python.core.PyObject.invoke(Unknown Source)
+        at org.python.pycode._pyx96.f$0(/u01/oracle/container-scripts/createInfraDomain.py:308)
+        at org.python.pycode._pyx96.call_function(/u01/oracle/container-scripts/createInfraDomain.py)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyCode.call(Unknown Source)
+        at org.python.core.Py.runCode(Py.java:1226)
+        at org.python.util.PythonInterpreter.execfile(Unknown Source)
+        at weblogic.management.scripting.WLST.main(WLST.java:186)
+        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.lang.reflect.Method.invoke(Method.java:498)
+        at weblogic.WLST.main(WLST.java:47)
+2023-04-17 07:07:32,866 WARNING [1] com.oracle.cie.domain.aspect.XBeanConfigAspect - Unable to locate property:SubDeploymentName on type:class com.oracle.cie.domain.xml.configxb.weblogic.x90.impl.DestinationKeyTypeImpl
+2023-04-17 07:07:32,984 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - warning:update domain
+2023-04-17 07:07:32,985 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - 40318: Invalid or missing JDBC datasource connection parameters.
+40318: The JDBC datasource required parameters are invalid or missing.
+40318: Correct the datasource connection parameters.
+2023-04-17 07:07:32,985 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - warning:update domain
+2023-04-17 07:07:32,985 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - 40321: Configuration port conflict.
+40321: Duplicate Server listen ports exist in your domain configuration:
+Port 7002 on myadmin
+40321: Change conflicting ports.
+2023-04-17 07:07:33,982 INFO  [22] com.oracle.cie.domain.info.variable.DomainVariableServiceImpl - initializing domaininformation object.
+2023-04-17 07:07:34,227 INFO  [22] oracle.security.jps.util.JpsUtil - JpsUtil: isAuditDisabled set to true
+2023-04-17 07:08:28,147 INFO  [22] org.hibernate.validator.internal.util.Version - HV000001: Hibernate Validator 5.2.5.Final
+2023-04-17 07:09:45,364 WARNING [22] oracle.security.opss.tools.lifecycle.OpssDomainConfigImpl - The schema INFRAMA_OPSS is already in use for security store(s).  Please create a new schema.
+2023-04-17 07:09:45,366 SEVERE [22] oracle.security.opss.tools.lifecycle.OpssDomainConfigImpl - Error during configuring DB security store. Exception oracle.security.opss.tools.lifecycle.LifecycleException: The schema INFRAMA_OPSS is already in use for security store(s).  Please create a new schema..
+2023-04-17 07:09:45,366 SEVERE [22] oracle.security.opss.tools.lifecycle.cie.OpssSecurityConfiguration - Error while processing initializeSubsystem. Exception oracle.security.opss.tools.lifecycle.LifecycleException: Error during configuring DB security store. Exception oracle.security.opss.tools.lifecycle.LifecycleException: The schema INFRAMA_OPSS is already in use for security store(s).  Please create a new schema..
+2023-04-17 07:09:45,368 SEVERE [22] com.oracle.cie.domain.progress.AbstractProgressGenerator - Error occurred in phase {OPSS Processing} execution.
+java.lang.IllegalStateException: SecurityContext:
+ Domain Name: myinfraDomain5
  JDBC URL: opss-audit-DBDS:jdbc:oracle:thin:@//myoracledb3.cgqwbwooqm3q.us-west-2.rds.amazonaws.com:1521/ORCL
  JDBC URL: opss-data-source:jdbc:oracle:thin:@//myoracledb3.cgqwbwooqm3q.us-west-2.rds.amazonaws.com:1521/ORCL
  JNDI Name: opss-audit-DBDS:jdbc/AuditAppendDataSource
@@ -60,10 +611,346 @@ Problem invoking WLST - Traceback (innermost last):
  Shared Secret Store: null
  Extension: true
  DisableManagementOperations: falseJDBC Properties:
-user:INFRA02_IAU_APPEND
-username:INFRA02_IAU_APPENDJDBC Properties:
-user:INFRA02_OPSS
-username:INFRA02_OPSS
+user:INFRAMA_IAU_APPEND
+username:INFRAMA_IAU_APPENDJDBC Properties:
+user:INFRAMA_OPSS
+username:INFRAMA_OPSS
+        at com.oracle.cie.domain.progress.template.importer.ImporterOPSSProcessingPhase.initialize(ImporterOPSSProcessingPhase.java:40)
+        at com.oracle.cie.domain.progress.domain.generation.OPSSProcessingPhase.processOPSS(OPSSProcessingPhase.java:154)
+        at com.oracle.cie.domain.progress.domain.generation.OPSSProcessingPhase.execute(OPSSProcessingPhase.java:54)
+        at com.oracle.cie.domain.progress.AbstractProgressGenerator.run(AbstractProgressGenerator.java:94)
+        at java.lang.Thread.run(Thread.java:750)
+Caused by: com.oracle.cie.domain.security.external.ConfigSecurityException: oracle.security.opss.tools.lifecycle.LifecycleException: Error during configuring DB security store. Exception oracle.security.opss.tools.lifecycle.LifecycleException: The schema INFRAMA_OPSS is already in use for security store(s).  Please create a new schema..
+        at oracle.security.opss.tools.lifecycle.cie.OpssSecurityConfiguration.initializeSubsystem(OpssSecurityConfiguration.java:191)
+        at com.oracle.cie.domain.progress.template.importer.ImporterOPSSProcessingPhase.initialize(ImporterOPSSProcessingPhase.java:36)
+        ... 4 more
+Caused by: oracle.security.opss.tools.lifecycle.LifecycleException: Error during configuring DB security store. Exception oracle.security.opss.tools.lifecycle.LifecycleException: The schema INFRAMA_OPSS is already in use for security store(s).  Please create a new schema..
+        at oracle.security.opss.tools.lifecycle.OpssDomainConfigImpl.configureDBSecurityStore(OpssDomainConfigImpl.java:618)
+        at oracle.security.opss.tools.lifecycle.OpssDomainConfigImpl.configureSubsystem(OpssDomainConfigImpl.java:489)
+        at oracle.security.opss.tools.lifecycle.OpssDomainConfigImpl.initializeSubsystem(OpssDomainConfigImpl.java:269)
+        at oracle.security.opss.tools.lifecycle.cie.OpssSecurityConfiguration.initializeSubsystem(OpssSecurityConfiguration.java:188)
+        ... 5 more
+Caused by: oracle.security.opss.tools.lifecycle.LifecycleException: The schema INFRAMA_OPSS is already in use for security store(s).  Please create a new schema.
+        at oracle.security.opss.tools.lifecycle.OpssDomainConfigImpl.configureDBSecurityStore(OpssDomainConfigImpl.java:605)
+        ... 8 more
+2023-04-17 07:09:45,430 SEVERE [22] com.oracle.cie.domain.progress.template.importer.ImporterExceptionHandlingPhase - Domain Extension Application Failed!
+
+Domain Location: /u01/oracle/user_projects/domains/myinfraDomain5
+
+Reason: SecurityContext:
+ Domain Name: myinfraDomain5
+ JDBC URL: opss-audit-DBDS:jdbc:oracle:thin:@//myoracledb3.cgqwbwooqm3q.us-west-2.rds.amazonaws.com:1521/ORCL
+ JDBC URL: opss-data-source:jdbc:oracle:thin:@//myoracledb3.cgqwbwooqm3q.us-west-2.rds.amazonaws.com:1521/ORCL
+ JNDI Name: opss-audit-DBDS:jdbc/AuditAppendDataSource
+ JNDI Name: opss-data-source:jdbc/OpssDataSource
+ Driver Name: opss-audit-DBDS:oracle.jdbc.OracleDriver
+ Driver Name: opss-data-source:oracle.jdbc.OracleDriver
+ Persistence Type: DATABASE
+ Platform: WLS
+ Scratch Dir: scratch
+ Reconfig Domain: false
+ Shared Secret Store: null
+ Extension: true
+ DisableManagementOperations: falseJDBC Properties:
+user:INFRAMA_IAU_APPEND
+username:INFRAMA_IAU_APPENDJDBC Properties:
+user:INFRAMA_OPSS
+username:INFRAMA_OPSS
+
+Exception:
+
+SecurityContext:
+ Domain Name: myinfraDomain5
+ JDBC URL: opss-audit-DBDS:jdbc:oracle:thin:@//myoracledb3.cgqwbwooqm3q.us-west-2.rds.amazonaws.com:1521/ORCL
+ JDBC URL: opss-data-source:jdbc:oracle:thin:@//myoracledb3.cgqwbwooqm3q.us-west-2.rds.amazonaws.com:1521/ORCL
+ JNDI Name: opss-audit-DBDS:jdbc/AuditAppendDataSource
+ JNDI Name: opss-data-source:jdbc/OpssDataSource
+ Driver Name: opss-audit-DBDS:oracle.jdbc.OracleDriver
+ Driver Name: opss-data-source:oracle.jdbc.OracleDriver
+ Persistence Type: DATABASE
+ Platform: WLS
+ Scratch Dir: scratch
+ Reconfig Domain: false
+ Shared Secret Store: null
+ Extension: true
+ DisableManagementOperations: falseJDBC Properties:
+user:INFRAMA_IAU_APPEND
+username:INFRAMA_IAU_APPENDJDBC Properties:
+user:INFRAMA_OPSS
+username:INFRAMA_OPSS
+
+java.lang.IllegalStateException: SecurityContext:
+ Domain Name: myinfraDomain5
+ JDBC URL: opss-audit-DBDS:jdbc:oracle:thin:@//myoracledb3.cgqwbwooqm3q.us-west-2.rds.amazonaws.com:1521/ORCL
+ JDBC URL: opss-data-source:jdbc:oracle:thin:@//myoracledb3.cgqwbwooqm3q.us-west-2.rds.amazonaws.com:1521/ORCL
+ JNDI Name: opss-audit-DBDS:jdbc/AuditAppendDataSource
+ JNDI Name: opss-data-source:jdbc/OpssDataSource
+ Driver Name: opss-audit-DBDS:oracle.jdbc.OracleDriver
+ Driver Name: opss-data-source:oracle.jdbc.OracleDriver
+ Persistence Type: DATABASE
+ Platform: WLS
+ Scratch Dir: scratch
+ Reconfig Domain: false
+ Shared Secret Store: null
+ Extension: true
+ DisableManagementOperations: falseJDBC Properties:
+user:INFRAMA_IAU_APPEND
+username:INFRAMA_IAU_APPENDJDBC Properties:
+user:INFRAMA_OPSS
+username:INFRAMA_OPSS
+        at com.oracle.cie.domain.progress.template.importer.ImporterOPSSProcessingPhase.initialize(ImporterOPSSProcessingPhase.java:40)
+        at com.oracle.cie.domain.progress.domain.generation.OPSSProcessingPhase.processOPSS(OPSSProcessingPhase.java:154)
+        at com.oracle.cie.domain.progress.domain.generation.OPSSProcessingPhase.execute(OPSSProcessingPhase.java:54)
+        at com.oracle.cie.domain.progress.AbstractProgressGenerator.run(AbstractProgressGenerator.java:94)
+        at java.lang.Thread.run(Thread.java:750)
+Caused by: com.oracle.cie.domain.security.external.ConfigSecurityException: oracle.security.opss.tools.lifecycle.LifecycleException: Error during configuring DB security store. Exception oracle.security.opss.tools.lifecycle.LifecycleException: The schema INFRAMA_OPSS is already in use for security store(s).  Please create a new schema..
+        at oracle.security.opss.tools.lifecycle.cie.OpssSecurityConfiguration.initializeSubsystem(OpssSecurityConfiguration.java:191)
+        at com.oracle.cie.domain.progress.template.importer.ImporterOPSSProcessingPhase.initialize(ImporterOPSSProcessingPhase.java:36)
+        ... 4 more
+Caused by: oracle.security.opss.tools.lifecycle.LifecycleException: Error during configuring DB security store. Exception oracle.security.opss.tools.lifecycle.LifecycleException: The schema INFRAMA_OPSS is already in use for security store(s).  Please create a new schema..
+        at oracle.security.opss.tools.lifecycle.OpssDomainConfigImpl.configureDBSecurityStore(OpssDomainConfigImpl.java:618)
+        at oracle.security.opss.tools.lifecycle.OpssDomainConfigImpl.configureSubsystem(OpssDomainConfigImpl.java:489)
+        at oracle.security.opss.tools.lifecycle.OpssDomainConfigImpl.initializeSubsystem(OpssDomainConfigImpl.java:269)
+        at oracle.security.opss.tools.lifecycle.cie.OpssSecurityConfiguration.initializeSubsystem(OpssSecurityConfiguration.java:188)
+        ... 5 more
+Caused by: oracle.security.opss.tools.lifecycle.LifecycleException: The schema INFRAMA_OPSS is already in use for security store(s).  Please create a new schema.
+        at oracle.security.opss.tools.lifecycle.OpssDomainConfigImpl.configureDBSecurityStore(OpssDomainConfigImpl.java:605)
+        ... 8 more
+2023-04-17 07:09:45,435 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - fail: 64254: Error occurred in "OPSS Processing" phase execution
+64254: Encountered error: SecurityContext:
+ Domain Name: myinfraDomain5
+ JDBC URL: opss-audit-DBDS:jdbc:oracle:thin:@//myoracledb3.cgqwbwooqm3q.us-west-2.rds.amazonaws.com:1521/ORCL
+ JDBC URL: opss-data-source:jdbc:oracle:thin:@//myoracledb3.cgqwbwooqm3q.us-west-2.rds.amazonaws.com:1521/ORCL
+ JNDI Name: opss-audit-DBDS:jdbc/AuditAppendDataSource
+ JNDI Name: opss-data-source:jdbc/OpssDataSource
+ Driver Name: opss-audit-DBDS:oracle.jdbc.OracleDriver
+ Driver Name: opss-data-source:oracle.jdbc.OracleDriver
+ Persistence Type: DATABASE
+ Platform: WLS
+ Scratch Dir: scratch
+ Reconfig Domain: false
+ Shared Secret Store: null
+ Extension: true
+ DisableManagementOperations: falseJDBC Properties:
+user:INFRAMA_IAU_APPEND
+username:INFRAMA_IAU_APPENDJDBC Properties:
+user:INFRAMA_OPSS
+username:INFRAMA_OPSS
+64254: Check log for more detail.
+2023-04-17 07:09:45,437 INFO  [1] com.oracle.cie.domain.script.ScriptExecutor - fail: update domain
+2023-04-17 07:09:45,437 SEVERE [1] com.oracle.cie.domain.script.ScriptExecutor - fail: update domain
+com.oracle.cie.domain.script.ScriptException: 64254: Error occurred in "OPSS Processing" phase execution
+64254: Encountered error: SecurityContext:
+ Domain Name: myinfraDomain5
+ JDBC URL: opss-audit-DBDS:jdbc:oracle:thin:@//myoracledb3.cgqwbwooqm3q.us-west-2.rds.amazonaws.com:1521/ORCL
+ JDBC URL: opss-data-source:jdbc:oracle:thin:@//myoracledb3.cgqwbwooqm3q.us-west-2.rds.amazonaws.com:1521/ORCL
+ JNDI Name: opss-audit-DBDS:jdbc/AuditAppendDataSource
+ JNDI Name: opss-data-source:jdbc/OpssDataSource
+ Driver Name: opss-audit-DBDS:oracle.jdbc.OracleDriver
+ Driver Name: opss-data-source:oracle.jdbc.OracleDriver
+ Persistence Type: DATABASE
+ Platform: WLS
+ Scratch Dir: scratch
+ Reconfig Domain: false
+ Shared Secret Store: null
+ Extension: true
+ DisableManagementOperations: falseJDBC Properties:
+user:INFRAMA_IAU_APPEND
+username:INFRAMA_IAU_APPENDJDBC Properties:
+user:INFRAMA_OPSS
+username:INFRAMA_OPSS
+64254: Check log for more detail.
+null
+        at com.oracle.cie.domain.script.ScriptExecutor.runProgressOperator(ScriptExecutor.java:5904)
+        at com.oracle.cie.domain.script.ScriptExecutor.updateDomain(ScriptExecutor.java:2496)
+        at com.oracle.cie.domain.script.jython.WLScriptContext.updateDomain(WLScriptContext.java:1217)
+        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.lang.reflect.Method.invoke(Method.java:498)
+        at com.oracle.cie.domain.script.jython.WLSTState.processCommand(WLSTState.java:226)
+        at com.oracle.cie.domain.script.jython.WLScriptContext.runCmd(WLScriptContext.java:732)
+        at sun.reflect.GeneratedMethodAccessor125.invoke(Unknown Source)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.lang.reflect.Method.invoke(Method.java:498)
+        at org.python.core.PyReflectedFunction.__call__(Unknown Source)
+        at org.python.core.PyMethod.__call__(Unknown Source)
+        at org.python.core.PyObject.__call__(Unknown Source)
+        at org.python.core.PyInstance.invoke(Unknown Source)
+        at org.python.pycode._pyx5.command$1(/tmp/WLSTOfflineIni1549393427525871121.py:19)
+        at org.python.pycode._pyx5.call_function(/tmp/WLSTOfflineIni1549393427525871121.py)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyFunction.__call__(PyFunction.java:181)
+        at org.python.pycode._pyx5.updateDomain$34(/tmp/WLSTOfflineIni1549393427525871121.py:143)
+        at org.python.pycode._pyx5.call_function(/tmp/WLSTOfflineIni1549393427525871121.py)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyFunction.__call__(PyFunction.java:178)
+        at org.python.pycode._pyx96.extendDomain$5(/u01/oracle/container-scripts/createInfraDomain.py:177)
+        at org.python.pycode._pyx96.call_function(/u01/oracle/container-scripts/createInfraDomain.py)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyFunction.__call__(PyFunction.java:199)
+        at org.python.core.PyMethod.__call__(Unknown Source)
+        at org.python.core.PyObject.__call__(Unknown Source)
+        at org.python.core.PyObject.invoke(Unknown Source)
+        at org.python.pycode._pyx96.createInfraDomain$3(/u01/oracle/container-scripts/createInfraDomain.py:47)
+        at org.python.pycode._pyx96.call_function(/u01/oracle/container-scripts/createInfraDomain.py)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyFunction.__call__(PyFunction.java:199)
+        at org.python.core.PyMethod.__call__(Unknown Source)
+        at org.python.core.PyObject.__call__(Unknown Source)
+        at org.python.core.PyObject.invoke(Unknown Source)
+        at org.python.pycode._pyx96.f$0(/u01/oracle/container-scripts/createInfraDomain.py:308)
+        at org.python.pycode._pyx96.call_function(/u01/oracle/container-scripts/createInfraDomain.py)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyCode.call(Unknown Source)
+        at org.python.core.Py.runCode(Py.java:1226)
+        at org.python.util.PythonInterpreter.execfile(Unknown Source)
+        at weblogic.management.scripting.WLST.main(WLST.java:186)
+        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.lang.reflect.Method.invoke(Method.java:498)
+        at weblogic.WLST.main(WLST.java:47)
+Caused by: com.oracle.cie.wizard.ext.progress.ProgressOperationException
+        at com.oracle.cie.domain.progress.AbstractProgressGenerator.run(AbstractProgressGenerator.java:121)
+        at java.lang.Thread.run(Thread.java:750)
+2023-04-17 07:09:45,440 SEVERE [1] com.oracle.cie.domain.script.jython.WLSTState - Exception executing command updateDomain
+com.oracle.cie.domain.script.jython.WLSTException: Error updating domain:
+64254: Error occurred in "OPSS Processing" phase execution
+64254: Encountered error: SecurityContext:
+ Domain Name: myinfraDomain5
+ JDBC URL: opss-audit-DBDS:jdbc:oracle:thin:@//myoracledb3.cgqwbwooqm3q.us-west-2.rds.amazonaws.com:1521/ORCL
+ JDBC URL: opss-data-source:jdbc:oracle:thin:@//myoracledb3.cgqwbwooqm3q.us-west-2.rds.amazonaws.com:1521/ORCL
+ JNDI Name: opss-audit-DBDS:jdbc/AuditAppendDataSource
+ JNDI Name: opss-data-source:jdbc/OpssDataSource
+ Driver Name: opss-audit-DBDS:oracle.jdbc.OracleDriver
+ Driver Name: opss-data-source:oracle.jdbc.OracleDriver
+ Persistence Type: DATABASE
+ Platform: WLS
+ Scratch Dir: scratch
+ Reconfig Domain: false
+ Shared Secret Store: null
+ Extension: true
+ DisableManagementOperations: falseJDBC Properties:
+user:INFRAMA_IAU_APPEND
+username:INFRAMA_IAU_APPENDJDBC Properties:
+user:INFRAMA_OPSS
+username:INFRAMA_OPSS
+64254: Check log for more detail.
+null
+        at com.oracle.cie.domain.script.jython.WLScriptContext.updateDomain(WLScriptContext.java:1222)
+        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.lang.reflect.Method.invoke(Method.java:498)
+        at com.oracle.cie.domain.script.jython.WLSTState.processCommand(WLSTState.java:226)
+        at com.oracle.cie.domain.script.jython.WLScriptContext.runCmd(WLScriptContext.java:732)
+        at sun.reflect.GeneratedMethodAccessor125.invoke(Unknown Source)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.lang.reflect.Method.invoke(Method.java:498)
+        at org.python.core.PyReflectedFunction.__call__(Unknown Source)
+        at org.python.core.PyMethod.__call__(Unknown Source)
+        at org.python.core.PyObject.__call__(Unknown Source)
+        at org.python.core.PyInstance.invoke(Unknown Source)
+        at org.python.pycode._pyx5.command$1(/tmp/WLSTOfflineIni1549393427525871121.py:19)
+        at org.python.pycode._pyx5.call_function(/tmp/WLSTOfflineIni1549393427525871121.py)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyFunction.__call__(PyFunction.java:181)
+        at org.python.pycode._pyx5.updateDomain$34(/tmp/WLSTOfflineIni1549393427525871121.py:143)
+        at org.python.pycode._pyx5.call_function(/tmp/WLSTOfflineIni1549393427525871121.py)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyFunction.__call__(PyFunction.java:178)
+        at org.python.pycode._pyx96.extendDomain$5(/u01/oracle/container-scripts/createInfraDomain.py:177)
+        at org.python.pycode._pyx96.call_function(/u01/oracle/container-scripts/createInfraDomain.py)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyFunction.__call__(PyFunction.java:199)
+        at org.python.core.PyMethod.__call__(Unknown Source)
+        at org.python.core.PyObject.__call__(Unknown Source)
+        at org.python.core.PyObject.invoke(Unknown Source)
+        at org.python.pycode._pyx96.createInfraDomain$3(/u01/oracle/container-scripts/createInfraDomain.py:47)
+        at org.python.pycode._pyx96.call_function(/u01/oracle/container-scripts/createInfraDomain.py)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyFunction.__call__(PyFunction.java:199)
+        at org.python.core.PyMethod.__call__(Unknown Source)
+        at org.python.core.PyObject.__call__(Unknown Source)
+        at org.python.core.PyObject.invoke(Unknown Source)
+        at org.python.pycode._pyx96.f$0(/u01/oracle/container-scripts/createInfraDomain.py:308)
+        at org.python.pycode._pyx96.call_function(/u01/oracle/container-scripts/createInfraDomain.py)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyCode.call(Unknown Source)
+        at org.python.core.Py.runCode(Py.java:1226)
+        at org.python.util.PythonInterpreter.execfile(Unknown Source)
+        at weblogic.management.scripting.WLST.main(WLST.java:186)
+        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.lang.reflect.Method.invoke(Method.java:498)
+        at weblogic.WLST.main(WLST.java:47)
+Caused by: com.oracle.cie.domain.script.ScriptException: 64254: Error occurred in "OPSS Processing" phase execution
+64254: Encountered error: SecurityContext:
+ Domain Name: myinfraDomain5
+ JDBC URL: opss-audit-DBDS:jdbc:oracle:thin:@//myoracledb3.cgqwbwooqm3q.us-west-2.rds.amazonaws.com:1521/ORCL
+ JDBC URL: opss-data-source:jdbc:oracle:thin:@//myoracledb3.cgqwbwooqm3q.us-west-2.rds.amazonaws.com:1521/ORCL
+ JNDI Name: opss-audit-DBDS:jdbc/AuditAppendDataSource
+ JNDI Name: opss-data-source:jdbc/OpssDataSource
+ Driver Name: opss-audit-DBDS:oracle.jdbc.OracleDriver
+ Driver Name: opss-data-source:oracle.jdbc.OracleDriver
+ Persistence Type: DATABASE
+ Platform: WLS
+ Scratch Dir: scratch
+ Reconfig Domain: false
+ Shared Secret Store: null
+ Extension: true
+ DisableManagementOperations: falseJDBC Properties:
+user:INFRAMA_IAU_APPEND
+username:INFRAMA_IAU_APPENDJDBC Properties:
+user:INFRAMA_OPSS
+username:INFRAMA_OPSS
+64254: Check log for more detail.
+null
+        at com.oracle.cie.domain.script.ScriptExecutor.runProgressOperator(ScriptExecutor.java:5904)
+        at com.oracle.cie.domain.script.ScriptExecutor.updateDomain(ScriptExecutor.java:2496)
+        at com.oracle.cie.domain.script.jython.WLScriptContext.updateDomain(WLScriptContext.java:1217)
+        ... 54 more
+Caused by: com.oracle.cie.wizard.ext.progress.ProgressOperationException
+        at com.oracle.cie.domain.progress.AbstractProgressGenerator.run(AbstractProgressGenerator.java:121)
+        at java.lang.Thread.run(Thread.java:750)
+2023-04-17 07:09:45,442 SEVERE [1] com.oracle.cie.domain.script.jython.CommandExceptionHandler - Error: runCmd() failed.
+com.oracle.cie.domain.script.jython.WLSTException: Error updating domain:
+64254: Error occurred in "OPSS Processing" phase execution
+64254: Encountered error: SecurityContext:
+ Domain Name: myinfraDomain5
+ JDBC URL: opss-audit-DBDS:jdbc:oracle:thin:@//myoracledb3.cgqwbwooqm3q.us-west-2.rds.amazonaws.com:1521/ORCL
+ JDBC URL: opss-data-source:jdbc:oracle:thin:@//myoracledb3.cgqwbwooqm3q.us-west-2.rds.amazonaws.com:1521/ORCL
+ JNDI Name: opss-audit-DBDS:jdbc/AuditAppendDataSource
+ JNDI Name: opss-data-source:jdbc/OpssDataSource
+ Driver Name: opss-audit-DBDS:oracle.jdbc.OracleDriver
+ Driver Name: opss-data-source:oracle.jdbc.OracleDriver
+ Persistence Type: DATABASE
+ Platform: WLS
+ Scratch Dir: scratch
+ Reconfig Domain: false
+ Shared Secret Store: null
+ Extension: true
+ DisableManagementOperations: falseJDBC Properties:
+user:INFRAMA_IAU_APPEND
+username:INFRAMA_IAU_APPENDJDBC Properties:
+user:INFRAMA_OPSS
+username:INFRAMA_OPSS
 64254: Check log for more detail.
 null
         at com.oracle.cie.domain.script.jython.CommandExceptionHandler.handleException(CommandExceptionHandler.java:69)
@@ -72,11 +959,55 @@ null
         at sun.reflect.GeneratedMethodAccessor125.invoke(Unknown Source)
         at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
         at java.lang.reflect.Method.invoke(Method.java:498)
-
-com.oracle.cie.domain.script.jython.WLSTException: com.oracle.cie.domain.script.jython.WLSTException: Error updating domain:
+        at org.python.core.PyReflectedFunction.__call__(Unknown Source)
+        at org.python.core.PyMethod.__call__(Unknown Source)
+        at org.python.core.PyObject.__call__(Unknown Source)
+        at org.python.core.PyInstance.invoke(Unknown Source)
+        at org.python.pycode._pyx5.command$1(/tmp/WLSTOfflineIni1549393427525871121.py:19)
+        at org.python.pycode._pyx5.call_function(/tmp/WLSTOfflineIni1549393427525871121.py)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyFunction.__call__(PyFunction.java:181)
+        at org.python.pycode._pyx5.updateDomain$34(/tmp/WLSTOfflineIni1549393427525871121.py:143)
+        at org.python.pycode._pyx5.call_function(/tmp/WLSTOfflineIni1549393427525871121.py)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyFunction.__call__(PyFunction.java:178)
+        at org.python.pycode._pyx96.extendDomain$5(/u01/oracle/container-scripts/createInfraDomain.py:177)
+        at org.python.pycode._pyx96.call_function(/u01/oracle/container-scripts/createInfraDomain.py)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyFunction.__call__(PyFunction.java:199)
+        at org.python.core.PyMethod.__call__(Unknown Source)
+        at org.python.core.PyObject.__call__(Unknown Source)
+        at org.python.core.PyObject.invoke(Unknown Source)
+        at org.python.pycode._pyx96.createInfraDomain$3(/u01/oracle/container-scripts/createInfraDomain.py:47)
+        at org.python.pycode._pyx96.call_function(/u01/oracle/container-scripts/createInfraDomain.py)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyFunction.__call__(PyFunction.java:199)
+        at org.python.core.PyMethod.__call__(Unknown Source)
+        at org.python.core.PyObject.__call__(Unknown Source)
+        at org.python.core.PyObject.invoke(Unknown Source)
+        at org.python.pycode._pyx96.f$0(/u01/oracle/container-scripts/createInfraDomain.py:308)
+        at org.python.pycode._pyx96.call_function(/u01/oracle/container-scripts/createInfraDomain.py)
+        at org.python.core.PyTableCode.call(Unknown Source)
+        at org.python.core.PyCode.call(Unknown Source)
+        at org.python.core.Py.runCode(Py.java:1226)
+        at org.python.util.PythonInterpreter.execfile(Unknown Source)
+        at weblogic.management.scripting.WLST.main(WLST.java:186)
+        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.lang.reflect.Method.invoke(Method.java:498)
+        at weblogic.WLST.main(WLST.java:47)
+Caused by: com.oracle.cie.domain.script.ScriptException: Error updating domain:
 64254: Error occurred in "OPSS Processing" phase execution
 64254: Encountered error: SecurityContext:
- Domain Name: myinfraDomain
+ Domain Name: myinfraDomain5
  JDBC URL: opss-audit-DBDS:jdbc:oracle:thin:@//myoracledb3.cgqwbwooqm3q.us-west-2.rds.amazonaws.com:1521/ORCL
  JDBC URL: opss-data-source:jdbc:oracle:thin:@//myoracledb3.cgqwbwooqm3q.us-west-2.rds.amazonaws.com:1521/ORCL
  JNDI Name: opss-audit-DBDS:jdbc/AuditAppendDataSource
@@ -90,17 +1021,71 @@ com.oracle.cie.domain.script.jython.WLSTException: com.oracle.cie.domain.script.
  Shared Secret Store: null
  Extension: true
  DisableManagementOperations: falseJDBC Properties:
-user:INFRA02_IAU_APPEND
-username:INFRA02_IAU_APPENDJDBC Properties:
-user:INFRA02_OPSS
-username:INFRA02_OPSS
+user:INFRAMA_IAU_APPEND
+username:INFRAMA_IAU_APPENDJDBC Properties:
+user:INFRAMA_OPSS
+username:INFRAMA_OPSS
 64254: Check log for more detail.
 null
-
-+ retval=1
-+ echo 'RetVal from Domain creation 1'
-RetVal from Domain creation 1
-+ '[' 1 -ne 0 ']'
-+ echo 'Domain Creation Failed.. Please check the Domain Logs'
-Domain Creation Failed.. Please check the Domain Logs
-+ exit
+        at com.oracle.cie.domain.script.jython.WLSTState.processCommand(WLSTState.java:243)
+        at com.oracle.cie.domain.script.jython.WLScriptContext.runCmd(WLScriptContext.java:732)
+        ... 48 more
+Caused by: com.oracle.cie.domain.script.jython.WLSTException: Error updating domain:
+64254: Error occurred in "OPSS Processing" phase execution
+64254: Encountered error: SecurityContext:
+ Domain Name: myinfraDomain5
+ JDBC URL: opss-audit-DBDS:jdbc:oracle:thin:@//myoracledb3.cgqwbwooqm3q.us-west-2.rds.amazonaws.com:1521/ORCL
+ JDBC URL: opss-data-source:jdbc:oracle:thin:@//myoracledb3.cgqwbwooqm3q.us-west-2.rds.amazonaws.com:1521/ORCL
+ JNDI Name: opss-audit-DBDS:jdbc/AuditAppendDataSource
+ JNDI Name: opss-data-source:jdbc/OpssDataSource
+ Driver Name: opss-audit-DBDS:oracle.jdbc.OracleDriver
+ Driver Name: opss-data-source:oracle.jdbc.OracleDriver
+ Persistence Type: DATABASE
+ Platform: WLS
+ Scratch Dir: scratch
+ Reconfig Domain: false
+ Shared Secret Store: null
+ Extension: true
+ DisableManagementOperations: falseJDBC Properties:
+user:INFRAMA_IAU_APPEND
+username:INFRAMA_IAU_APPENDJDBC Properties:
+user:INFRAMA_OPSS
+username:INFRAMA_OPSS
+64254: Check log for more detail.
+null
+        at com.oracle.cie.domain.script.jython.WLScriptContext.updateDomain(WLScriptContext.java:1222)
+        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.lang.reflect.Method.invoke(Method.java:498)
+        at com.oracle.cie.domain.script.jython.WLSTState.processCommand(WLSTState.java:226)
+        ... 49 more
+Caused by: com.oracle.cie.domain.script.ScriptException: 64254: Error occurred in "OPSS Processing" phase execution
+64254: Encountered error: SecurityContext:
+ Domain Name: myinfraDomain5
+ JDBC URL: opss-audit-DBDS:jdbc:oracle:thin:@//myoracledb3.cgqwbwooqm3q.us-west-2.rds.amazonaws.com:1521/ORCL
+ JDBC URL: opss-data-source:jdbc:oracle:thin:@//myoracledb3.cgqwbwooqm3q.us-west-2.rds.amazonaws.com:1521/ORCL
+ JNDI Name: opss-audit-DBDS:jdbc/AuditAppendDataSource
+ JNDI Name: opss-data-source:jdbc/OpssDataSource
+ Driver Name: opss-audit-DBDS:oracle.jdbc.OracleDriver
+ Driver Name: opss-data-source:oracle.jdbc.OracleDriver
+ Persistence Type: DATABASE
+ Platform: WLS
+ Scratch Dir: scratch
+ Reconfig Domain: false
+ Shared Secret Store: null
+ Extension: true
+ DisableManagementOperations: falseJDBC Properties:
+user:INFRAMA_IAU_APPEND
+username:INFRAMA_IAU_APPENDJDBC Properties:
+user:INFRAMA_OPSS
+username:INFRAMA_OPSS
+64254: Check log for more detail.
+null
+        at com.oracle.cie.domain.script.ScriptExecutor.runProgressOperator(ScriptExecutor.java:5904)
+        at com.oracle.cie.domain.script.ScriptExecutor.updateDomain(ScriptExecutor.java:2496)
+        at com.oracle.cie.domain.script.jython.WLScriptContext.updateDomain(WLScriptContext.java:1217)
+        ... 54 more
+Caused by: com.oracle.cie.wizard.ext.progress.ProgressOperationException
+        at com.oracle.cie.domain.progress.AbstractProgressGenerator.run(AbstractProgressGenerator.java:121)
+        at java.lang.Thread.run(Thread.java:750)
