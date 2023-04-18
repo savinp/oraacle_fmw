@@ -40,7 +40,7 @@ echo "RCUPREFIX=${RCUPREFIX:?"Please set RCUPREFIX for the database schemas"}"
 echo "DOMAIN_NAME=${DOMAIN_NAME:?"Please set DOMAIN_NAME for creating the new Domain"}"
 echo "DOMAIN_HOME=$DOMAIN_HOME"
 
-RUN_RCU="true"
+RUN_RCU="false"
 CONTAINERCONFIG_DIR=/u01/oracle/ContainerData
 export CONNECTION_STRING=$CONNECTION_STRING
 export RCUPREFIX=$RCUPREFIX
